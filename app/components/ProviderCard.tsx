@@ -25,7 +25,7 @@ export function ProviderCard({
 }: ProviderCardProps) {
   return (
     <Card className="p-8">
-      <Link href={`/providers/${name.toLowerCase()}`} className="block">
+      <Link href={`/providers/${name.toLowerCase().replace(/\s+/g, "-")}`} className="block">
         <div className="grid md:grid-cols-[200px,1fr,200px] gap-8 items-start">
           <div>
             <Image src={logo || "/placeholder.svg"} alt={`${name} logo`} width={200} height={80} className="mb-4" />
