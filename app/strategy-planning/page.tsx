@@ -9,7 +9,7 @@ export default function StrategyPlanning() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
-      <main className="container mx-auto px-4 py-0 md:py-16">
+      <main className="container mx-auto px-4 py-2 md:py-16">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">Strategy & Planning</h1>
         <p className="text-xl text-center max-w-4xl mx-auto mb-16">
           Create a sustainability strategy and implementation plan. Establish goals and milestones, create a roadmap,
