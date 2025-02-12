@@ -4,7 +4,7 @@ export const providers: ProviderProfile[] = [
   {
     id: "3degrees",
     name: "3Degrees",
-    logo: "/placeholder.svg?height=80&width=200",
+    logo: "/3degrees-logo.png?height=80&width=200",
     location: "San Francisco, CA, USA",
     established: "2008",
     size: "Mid-size firm",
