@@ -19,7 +19,7 @@ export const providers: ProviderProfile[] = [
         partner: "Merge Electric Fleet Solutions",
         description:
           "3Degrees partnered with Merge to craft a fleet electrification roadmap for the MA-based solar company",
-        videoUrl: "https://www.youtube.com/embed/example",
+        videoUrl: "https://youtu.be/gIfPUeebVI4?si=6Y0ih-GnM6A3N9FL",
       },
     ],
     testimonials: [
