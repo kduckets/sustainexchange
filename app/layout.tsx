@@ -7,8 +7,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "SustainExchange - Connect with Top Sustainability Experts",
   description:
-    "Empowering companies and institutions to achieve their sustainability goals by connecting them with the best service providers.",
-    generator: 'v0.dev'
+    "Empowering companies and institutions to achieve their sustainability goals by connecting them with the best service providers."
 }
 
 export default function RootLayout({
