@@ -57,7 +57,7 @@ function ServiceCard({
   href?: string
 }) {
   const CardContent = (
-    <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <div className="flex flex-col h-full items-center gap-4 p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
       <div className="text-blue-600">{icon}</div>
       <h3 className="font-semibold text-center">{title}</h3>
     </div>
