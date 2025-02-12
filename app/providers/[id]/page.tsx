@@ -4,12 +4,19 @@ import { providers } from "@/data/providers"
 import { notFound } from "next/navigation"
 import { Carousel } from "@/app/components/Carousel"
 import { Header } from "@/app/components/Header"
+import { YouTubeEmbed } from "@/app/components/YouTubeEmbed"
 
 export default function ProviderProfile({ params }: { params: { id: string } }) {
   const provider = providers.find((p) => p.id === params.id)
 
   if (!provider) {
     notFound()
+  }
+
+  function getYouTubeVideoId(url: string): string | null {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+    const match = url.match(regExp)
+    return match && match[2].length === 11 ? match[2] : null
   }
 
   return (
@@ -73,14 +80,11 @@ export default function ProviderProfile({ params }: { params: { id: string } }) 
                   </p>
                   {project.videoUrl && (
                     <div className="aspect-video">
-                      <iframe
-                        width="100%"
-                        height="100%"
-                        src={project.videoUrl}
-                        title="Project video"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
+                      {getYouTubeVideoId(project.videoUrl) ? (
+                        <YouTubeEmbed videoId={getYouTubeVideoId(project.videoUrl)!} />
+                      ) : (
+                        <p className="text-red-500">Invalid YouTube URL</p>
+                      )}
                     </div>
                   )}
                 </div>
