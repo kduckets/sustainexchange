@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { MobileMenu } from "@/app/components/MobileMenu"
+import { MobileMenu } from "./MobileMenu"
 
 export function Header() {
   return (
@@ -12,6 +12,12 @@ export function Header() {
         </Link>
       </div>
       <div className="hidden md:flex items-center gap-4">
+      <Button variant="ghost" className="text-gray-700">
+          For Providers
+        </Button>
+        <Button variant="ghost" className="text-gray-700">
+          For Seekers
+        </Button>
         <Button variant="ghost" className="text-gray-700">
           About
         </Button>
