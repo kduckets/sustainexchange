@@ -50,7 +50,7 @@ export const providers: ProviderProfile[] = [
         partner: "Schneider Electric",
         description:
           "Accenture collaborated with Schneider Electric to develop and implement a comprehensive sustainability strategy, focusing on energy efficiency and carbon reduction across their global operations.",
-        videoUrl: "https://www.youtube.com/embed/example2",
+        videoUrl: "https://www.youtube.com/watch?v=Y9p_zEr6UjE",
       },
     ],
     testimonials: [
