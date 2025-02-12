@@ -17,8 +17,8 @@ export default function ProviderProfile({ params }: { params: { id: string } }) 
       <Header />
       <main className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
-          <div className="flex justify-between items-start mb-8">
-            <div className="flex gap-8">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-8 gap-4">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-8">
               <Image
                 src={provider.logo || "/placeholder.svg"}
                 alt={`${provider.name} logo`}
@@ -35,7 +35,9 @@ export default function ProviderProfile({ params }: { params: { id: string } }) 
                 </div>
               </div>
             </div>
-            <Button className="bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50">Contact</Button>
+            <Button className="bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50 self-start mt-4 md:mt-0">
+              Contact
+            </Button>
           </div>
 
           <div className="prose max-w-none mb-8">
