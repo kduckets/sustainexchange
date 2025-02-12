@@ -19,8 +19,7 @@ export function MobileMenu() {
     { href: "#", icon: <Calculator className="w-5 h-5 mr-2" />, label: "Auditing & M&V" },
     { href: "#", icon: <FileText className="w-5 h-5 mr-2" />, label: "Reporting & Communications" },
     { href: "/", icon: null, label: "RFX Hub" },
-    { href: "/", icon: null, label: "About" },
-    { href: "/", icon: null, label: "Expert Log in" },
+    { href: "/", icon: null, label: "About" }
   ]
 
   return (
@@ -45,6 +44,17 @@ export function MobileMenu() {
             </Link>
           ))}
         </nav>
+        <div className="mt-6">
+          <Button
+            className="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white hover:from-blue-500 hover:to-blue-700"
+            onClick={() => {
+              handleLinkClick()
+              // Add any additional login logic here
+            }}
+          >
+            Expert Log in
+          </Button>
+        </div>
       </SheetContent>
     </Sheet>
   )
