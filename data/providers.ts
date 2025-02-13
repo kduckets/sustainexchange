@@ -63,5 +63,134 @@ export const providers: ProviderProfile[] = [
       },
     ],
   },
+  {
+    id: "erm",
+    name: "ERM (Environmental Resources Management)",
+    logo: "/ERM-logo.png?height=80&width=200",
+    location: "London, UK",
+    established: "1971",
+    size: "Large firm",
+    description:
+      "ERM is the largest global pure-play sustainability consultancy. We partner with the world's leading organizations to create innovative solutions to sustainability challenges and unlock commercial opportunities that meet the needs of today while preserving opportunities for future generations.",
+    website: "www.erm.com",
+    marketsServed: ["Global"],
+    sectorsServed: ["Oil & Gas", "Mining", "Power", "Manufacturing", "Chemical", "Technology"],
+    areasOfExpertise: [
+      "Environmental & Social Impact Assessment",
+      "Climate Change & Energy",
+      "ESG & Sustainability",
+      "Safety & Risk",
+    ],
+    projects: [
+      {
+        partner: "Major Oil Company",
+        description:
+          "Conducted a global carbon footprint assessment and developed a roadmap for achieving net-zero emissions by 2050.",
+        videoUrl: "https://www.youtube.com/watch?v=example3",
+      },
+    ],
+    testimonials: [
+      {
+        quote:
+          "ERM's comprehensive approach to sustainability has helped us navigate complex environmental challenges and improve our overall performance.",
+        author: "Sarah Johnson",
+        title: "Chief Sustainability Officer",
+        company: "Global Mining Corp",
+      },
+    ],
+  },
+  {
+    id: "wspsustainability",
+    name: "WSP",
+    logo: "/wsp-logo.png?height=80&width=200",
+    location: "Montreal, Canada",
+    established: "1959",
+    size: "Large firm",
+    description:
+      "WSP is one of the world's leading professional services consulting firms. We provide strategic advisory, engineering, and design services to clients in the Transportation & Infrastructure, Property & Buildings, Earth & Environment, Power & Energy, Resources, and Industry sectors.",
+    website: "www.wsp.com",
+    marketsServed: ["Global"],
+    sectorsServed: ["Transportation", "Buildings", "Environment", "Energy", "Resources", "Industry"],
+    areasOfExpertise: ["Climate Resilience", "Sustainable Buildings", "Environmental Planning", "Energy Transition"],
+    projects: [
+      {
+        partner: "City of Toronto",
+        description:
+          "Developed a comprehensive climate action strategy to help the city achieve its goal of becoming net-zero by 2040.",
+        videoUrl: "https://www.youtube.com/watch?v=example4",
+      },
+    ],
+    testimonials: [
+      {
+        quote:
+          "WSP's innovative approach to sustainable infrastructure has been crucial in our efforts to build a more resilient and environmentally friendly city.",
+        author: "Michael Lee",
+        title: "Urban Planning Director",
+        company: "City of Toronto",
+      },
+    ],
+  },
+  {
+    id: "dnvgl",
+    name: "DNV",
+    logo: "/dnv-logo.png?height=80&width=200",
+    location: "Oslo, Norway",
+    established: "1864",
+    size: "Large firm",
+    description:
+      "DNV is an independent assurance and risk management provider, operating in more than 100 countries. We provide assurance to the entire energy value chain through our advisory, monitoring, verification, and certification services.",
+    website: "www.dnv.com",
+    marketsServed: ["Global"],
+    sectorsServed: ["Maritime", "Oil & Gas", "Energy Systems", "Business Assurance"],
+    areasOfExpertise: ["Renewable Energy", "Energy Efficiency", "Climate Action", "Sustainable Finance"],
+    projects: [
+      {
+        partner: "Ørsted",
+        description:
+          "Provided technical due diligence and advisory services for the development of the world's largest offshore wind farm.",
+        videoUrl: "https://www.youtube.com/watch?v=example5",
+      },
+    ],
+    testimonials: [
+      {
+        quote:
+          "DNV's expertise in renewable energy and their rigorous approach to risk management have been instrumental in the success of our offshore wind projects.",
+        author: "Anna Nielsen",
+        title: "Head of Offshore Wind Development",
+        company: "Ørsted",
+      },
+    ],
+  },
+  {
+    id: "sustainalytics",
+    name: "Sustainalytics",
+    logo: "/Sustainalytics-Logo.png?height=80&width=200",
+    location: "Amsterdam, Netherlands",
+    established: "1992",
+    size: "Mid-size firm",
+    description:
+      "Sustainalytics, a Morningstar company, is a leading independent ESG and corporate governance research, ratings and analytics firm that supports investors around the world with the development and implementation of responsible investment strategies.",
+    website: "www.sustainalytics.com",
+    marketsServed: ["Global"],
+    sectorsServed: ["Financial Services", "Asset Management", "Corporate"],
+    areasOfExpertise: ["ESG Risk Ratings", "Sustainable Finance", "Impact Investing", "Corporate ESG Assessment"],
+    projects: [
+      {
+        partner: "Major European Bank",
+        description:
+          "Developed a comprehensive ESG integration framework for the bank's investment processes, covering over €500 billion in assets under management.",
+        videoUrl: "https://www.youtube.com/watch?v=example6",
+      },
+    ],
+    testimonials: [
+      {
+        quote:
+          "Sustainalytics' ESG risk ratings and research have become an integral part of our investment decision-making process, helping us to better manage risks and identify sustainable investment opportunities.",
+        author: "Emma Larsson",
+        title: "Head of Responsible Investments",
+        company: "Nordic Asset Management",
+      },
+    ],
+  },
 ]
 
