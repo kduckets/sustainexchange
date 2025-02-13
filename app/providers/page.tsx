@@ -1,9 +1,11 @@
 "use client"
 
-import { Search } from "lucide-react"
+import { Search, Filter } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Header } from "@/app/components/Header"
 import { SearchResults } from "@/app/components/SearchResults"
 import { providers } from "@/data/providers"
@@ -20,6 +22,7 @@ export default function SearchProviders() {
     areasOfExpertise: [] as string[],
     countries: [] as string[],
   })
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
 
   const allMarkets = useMemo(() => Array.from(new Set(providers.flatMap((p) => p.marketsServed))), [])
   const allSectors = useMemo(() => Array.from(new Set(providers.flatMap((p) => p.sectorsServed))), [])
@@ -89,6 +92,35 @@ export default function SearchProviders() {
     setSearchResults(results)
   }
 
+  const FiltersContent = () => (
+    <>
+      <FilterSection
+        title="Markets Served"
+        items={allMarkets}
+        selectedItems={filters.marketsServed}
+        onChange={(value) => handleFilterChange("marketsServed", value)}
+      />
+      <FilterSection
+        title="Sectors Served"
+        items={allSectors}
+        selectedItems={filters.sectorsServed}
+        onChange={(value) => handleFilterChange("sectorsServed", value)}
+      />
+      <FilterSection
+        title="Areas of Expertise"
+        items={allAreas}
+        selectedItems={filters.areasOfExpertise}
+        onChange={(value) => handleFilterChange("areasOfExpertise", value)}
+      />
+      <FilterSection
+        title="Countries"
+        items={allCountries}
+        selectedItems={filters.countries}
+        onChange={(value) => handleFilterChange("countries", value)}
+      />
+    </>
+  )
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
@@ -97,7 +129,7 @@ export default function SearchProviders() {
           Search Sustainability Providers
         </h2>
 
-        <div className="relative max-w-2xl mx-auto mb-16">
+        <div className="relative max-w-2xl mx-auto mb-8">
           <Input
             type="text"
             placeholder="What do you need help with?"
@@ -108,33 +140,28 @@ export default function SearchProviders() {
           <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
         </div>
 
+        <div className="md:hidden mb-8">
+          <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+            <SheetTrigger asChild>
+              <Button variant="outline" className="w-full">
+                <Filter className="mr-2 h-4 w-4" /> Filters
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+              <SheetHeader>
+                <SheetTitle>Filters</SheetTitle>
+              </SheetHeader>
+              <div className="mt-4">
+                <FiltersContent />
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+
         <div className="grid md:grid-cols-[250px,1fr] gap-8">
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="hidden md:block bg-white p-6 rounded-lg shadow-sm">
             <h3 className="font-semibold mb-4">Filters</h3>
-            <FilterSection
-              title="Markets Served"
-              items={allMarkets}
-              selectedItems={filters.marketsServed}
-              onChange={(value) => handleFilterChange("marketsServed", value)}
-            />
-            <FilterSection
-              title="Sectors Served"
-              items={allSectors}
-              selectedItems={filters.sectorsServed}
-              onChange={(value) => handleFilterChange("sectorsServed", value)}
-            />
-            <FilterSection
-              title="Areas of Expertise"
-              items={allAreas}
-              selectedItems={filters.areasOfExpertise}
-              onChange={(value) => handleFilterChange("areasOfExpertise", value)}
-            />
-            <FilterSection
-              title="Countries"
-              items={allCountries}
-              selectedItems={filters.countries}
-              onChange={(value) => handleFilterChange("countries", value)}
-            />
+            <FiltersContent />
           </div>
           <div>
             <SearchResults results={searchResults} />
