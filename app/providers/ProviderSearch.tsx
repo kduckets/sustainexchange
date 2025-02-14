@@ -192,6 +192,7 @@ export default function ProviderSearch() {
         items={allSectors}
         selectedItems={filters.sectorsServed}
         onChange={(value) => handleFilterChange("sectorsServed", value)}
+        maxHeight=""
       />
       <FilterSection
         title="Firm Size"
