@@ -28,7 +28,7 @@ export default function Home() {
           Find top sustainability experts to tackle your toughest projects
         </h2>
 
-        <div className="relative max-w-4xl mx-auto mb-16 flex flex-col sm:flex-row items-center">
+        <div className="relative max-w-4xl mx-auto mb-8 md:mb-16 flex flex-col sm:flex-row items-center">
           <form onSubmit={handleSearch} className="w-full sm:flex-grow mb-4 sm:mb-0">
             <div className="relative">
               <Input
