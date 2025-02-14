@@ -159,7 +159,7 @@ export const providers: ProviderProfile[] = [
   {
     id: "erm",
     name: "ERM (Environmental Resources Management)",
-    logo: "/erm-logo.png?height=80&width=200",
+    logo: "/ERM-logo.png?height=80&width=200",
     location: "London, UK",
     established: "1971",
     size: "Large firm",
@@ -306,7 +306,7 @@ export const providers: ProviderProfile[] = [
   {
     id: "sustainalytics",
     name: "Sustainalytics",
-    logo: "/sustainalytics-logo.png?height=80&width=200",
+    logo: "/Sustainalytics-Logo.png?height=80&width=200",
     location: "Amsterdam, Netherlands",
     established: "1992",
     size: "Mid-size firm",
