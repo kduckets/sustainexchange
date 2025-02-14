@@ -42,9 +42,9 @@ export default function RFXHub() {
       <Header />
       <main className="container mx-auto px-4 py-4 md:py-16">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">RFP Hub</h1>
-        <p className="text-lg text-center mb-2">Are you a sustainability consultant or service provider? Find your next opportunity here!</p>
+        <p className="text-lg text-center mb-2">Are you a sustainability consultant or service provider? Find your next opportunity!</p>
         <p className="text-lg text-center mb-12">
-        Do you need some support with a sustainability project or program? List your RFP/I/Q here today.
+        Do you need some support with a sustainability project or program? List your RFP/I/Q.
         </p>
 
         <div className="bg-gray-100 p-6 rounded-lg mb-8">

@@ -84,7 +84,7 @@ export default function Home() {
               RFP Hub
             </Button>
           </Link>
-          <p className="text-lg">Post your sustainability or ESG project today to attract top experts and service providers.</p>
+          <p className="text-lg">Post your sustainability or ESG project to attract top experts and service providers.</p>
         </div>
       </main>
     </div>
