@@ -11,6 +11,7 @@ import { SearchResults } from "@/app/components/SearchResults"
 import { providers, areasOfExpertise } from "@/data/providers"
 import { useState, useMemo, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
+import { LoadingState } from "@/app/components/LoadingState"
 
 type Filters = {
   marketsServed: string[]
@@ -81,6 +82,7 @@ export default function ProviderSearch() {
   })
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [expandedCategories, setExpandedCategories] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const allMarkets = useMemo(() => {
     const markets = Array.from(new Set(providers.flatMap((p) => p.marketsServed)))
@@ -94,12 +96,14 @@ export default function ProviderSearch() {
     const query = searchParams.get("q") || ""
     const expertise = searchParams.get("expertise") || ""
     setSearchQuery(query)
+    setIsLoading(true)
     setFilters((prev) => {
       const newFilters = {
         ...prev,
         areasOfExpertise: expertise ? [expertise] : prev.areasOfExpertise,
       }
       setSearchResults(filterResults(query, newFilters, providers))
+      setIsLoading(false)
       return newFilters
     })
   }, [searchParams])
@@ -223,7 +227,7 @@ export default function ProviderSearch() {
       <Header />
       <main className="container mx-auto px-4 py-4 md:py-16">
         <h2 className="text-3xl md:text-5xl font-semibold max-w-4xl mx-auto mb-12 text-center">
-          Find Sustainability Providers
+          Search Sustainability Providers
         </h2>
 
         <div className="relative max-w-2xl mx-auto mb-8">
@@ -263,12 +267,16 @@ export default function ProviderSearch() {
             <FiltersContent />
           </div>
           <div>
-            <SearchResults
-              results={searchResults}
-              searchQuery={searchQuery}
-              activeFilters={filters}
-              onClearAll={clearAll}
-            />
+            {isLoading ? (
+              <LoadingState />
+            ) : (
+              <SearchResults
+                results={searchResults}
+                searchQuery={searchQuery}
+                activeFilters={filters}
+                onClearAll={clearAll}
+              />
+            )}
           </div>
         </div>
       </main>

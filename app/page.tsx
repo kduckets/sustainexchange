@@ -28,7 +28,7 @@ export default function Home() {
           Find top sustainability experts to tackle your toughest projects
         </h2>
 
-        <div className="relative max-w-4xl mx-auto mb-8 md:mb-16 flex flex-col sm:flex-row items-center">
+        <div className="relative max-w-4xl mx-auto mb-16 flex flex-col sm:flex-row items-center">
           <form onSubmit={handleSearch} className="w-full sm:flex-grow mb-4 sm:mb-0">
             <div className="relative">
               <Input
@@ -59,22 +59,22 @@ export default function Home() {
           <ServiceCard
             icon={<ClipboardCheck className="w-12 h-12" />}
             title="Strategy & Planning"
-            href="/providers?expertise=Strategy%20%26%20Planning"
+            expertise="Strategy & Planning"
           />
           <ServiceCard
             icon={<Wrench className="w-12 h-12" />}
             title="Technical Support"
-            href="/providers?expertise=Technical%20Support"
+            expertise="Technical Support"
           />
           <ServiceCard
             icon={<Calculator className="w-12 h-12" />}
             title="Auditing, Testing & Verification"
-            href="/providers?expertise=Auditing%2C%20Testing%20%26%20Verification"
+            expertise="Auditing, Testing & Verification"
           />
           <ServiceCard
             icon={<FileText className="w-12 h-12" />}
             title="PR & Communications"
-            href="/providers?expertise=PR%20%26%20Communications"
+            expertise="PR & Communications"
           />
         </div>
 
@@ -84,7 +84,7 @@ export default function Home() {
               RFP Hub
             </Button>
           </Link>
-          <p className="text-lg">Post your sustainability or ESG project to attract top experts and service providers.</p>
+          <p className="text-lg">Post your sustainability or ESG project to attract top experts and service providers</p>
         </div>
       </main>
     </div>
@@ -94,19 +94,25 @@ export default function Home() {
 function ServiceCard({
   icon,
   title,
-  href,
+  expertise,
 }: {
   icon: React.ReactNode
   title: string
-  href: string
+  expertise: string
 }) {
+  const router = useRouter()
+
+  const handleClick = () => {
+    router.push(`/providers?expertise=${encodeURIComponent(expertise)}`)
+  }
+
   return (
-    <Link href={`${href}`} className="block">
-       <div className="h-full flex flex-col items-center gap-4 p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <button onClick={handleClick} className="block w-full text-left">
+      <div className="h-full flex flex-col items-center gap-4 p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
         <div className="text-blue-600">{icon}</div>
         <h3 className="font-semibold text-center">{title}</h3>
       </div>
-    </Link>
+    </button>
   )
 }
 
