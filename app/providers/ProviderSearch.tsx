@@ -223,7 +223,7 @@ export default function ProviderSearch() {
       <Header />
       <main className="container mx-auto px-4 py-4 md:py-16">
         <h2 className="text-4xl md:text-5xl font-bold max-w-4xl mx-auto mb-12 text-center">
-          Search Sustainability Providers
+          Find Sustainability Providers
         </h2>
 
         <div className="relative max-w-2xl mx-auto mb-8">
