@@ -222,7 +222,7 @@ export default function ProviderSearch() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
       <main className="container mx-auto px-4 py-4 md:py-16">
-        <h2 className="text-4xl md:text-5xl font-bold max-w-4xl mx-auto mb-12 text-center">
+        <h2 className="text-4xl md:text-5xl font-semibold max-w-4xl mx-auto mb-12 text-center">
           Find Sustainability Providers
         </h2>
 

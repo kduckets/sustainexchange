@@ -41,7 +41,7 @@ export default function RFXHub() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
       <main className="container mx-auto px-4 py-4 md:py-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">RFP Hub</h1>
+        <h1 className="text-4xl md:text-5xl font-semibold text-center mb-6">RFP Hub</h1>
         <p className="text-lg font-thin text-center mb-2">Are you a sustainability consultant or service provider? Find your next opportunity!</p>
         <p className="text-lg font-thin text-center mb-12">
         Do you need some support with a sustainability project or program? List your RFP/I/Q.
