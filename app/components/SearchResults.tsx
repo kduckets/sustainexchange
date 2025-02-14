@@ -11,7 +11,6 @@ interface SearchResultsProps {
     marketsServed: string[]
     sectorsServed: string[]
     areasOfExpertise: string[]
-    countries: string[]
   }
   onClearAll: () => void
 }

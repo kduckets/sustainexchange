@@ -1,7 +1,7 @@
 export interface Project {
   partner: string
   description: string
-  videoUrl: string
+  videoUrl?: string // Add the ? to make it optional
 }
 
 export interface Testimonial {
@@ -25,5 +25,7 @@ export interface ProviderProfile {
   areasOfExpertise: string[]
   projects: Project[]
   testimonials: Testimonial[]
+  firmSize: "Small" | "Mid-size" | "Large"
+  yearsInBusiness: number
 }
 

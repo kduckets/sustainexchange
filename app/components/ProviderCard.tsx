@@ -11,7 +11,6 @@ interface ProviderCardProps {
   logo: string
   marketsServed: string
   description: string
-  satisfaction: string
   yearsInBusiness: string
 }
 
@@ -20,7 +19,6 @@ export function ProviderCard({
   logo,
   marketsServed,
   description,
-  satisfaction,
   yearsInBusiness,
 }: ProviderCardProps) {
   return (
@@ -32,6 +30,7 @@ export function ProviderCard({
             <h2 className="text-2xl font-bold mb-2">{name}</h2>
             <div className="text-sm">
               <strong className="font-semibold">Markets Served:</strong> {marketsServed}
+              <div className="font-thin">{yearsInBusiness}</div>
             </div>
           </div>
 
@@ -40,12 +39,7 @@ export function ProviderCard({
           </div>
 
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Star className="text-yellow-400 fill-yellow-400" />
-              <span className="font-semibold">{satisfaction}</span>
-            </div>
-            <div className="font-semibold">{yearsInBusiness}</div>
-            <Button
+          <Button
               className="w-full bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50"
               onClick={(e) => {
                 e.preventDefault()
@@ -54,7 +48,7 @@ export function ProviderCard({
               }}
             >
               Contact
-            </Button>
+            </Button>   
           </div>
         </div>
       </Link>

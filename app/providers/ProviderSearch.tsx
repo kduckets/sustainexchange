@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Filter } from "lucide-react"
+import { Search, Filter, ChevronDown, ChevronUp } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Header } from "@/app/components/Header"
 import { SearchResults } from "@/app/components/SearchResults"
-import { providers } from "@/data/providers"
+import { providers, areasOfExpertise } from "@/data/providers"
 import { useState, useMemo, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 
@@ -21,20 +21,19 @@ export default function ProviderSearch() {
     marketsServed: [] as string[],
     sectorsServed: [] as string[],
     areasOfExpertise: [] as string[],
-    countries: [] as string[],
+    firmSize: [] as string[],
+    yearsInBusiness: [] as string[],
   })
   const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([])
 
   const allMarkets = useMemo(() => {
     const markets = Array.from(new Set(providers.flatMap((p) => p.marketsServed)))
     return markets.includes("Global") ? markets : ["Global", ...markets]
   }, [])
   const allSectors = useMemo(() => Array.from(new Set(providers.flatMap((p) => p.sectorsServed))), [])
-  const allAreas = useMemo(() => Array.from(new Set(providers.flatMap((p) => p.areasOfExpertise))), [])
-  const allCountries = useMemo(
-    () => Array.from(new Set(providers.map((p) => p.location.split(",").pop()?.trim() || ""))),
-    [],
-  )
+  const firmSizes = ["Small", "Mid-size", "Large"]
+  const yearsInBusinessRanges = ["0-5 years", "6-10 years", "11-20 years", "21+ years"]
 
   useEffect(() => {
     const query = searchParams.get("q") || ""
@@ -85,15 +84,35 @@ export default function ProviderSearch() {
         currentFilters.sectorsServed.some((sector) => provider.sectorsServed.includes(sector))
       const matchesAreas =
         currentFilters.areasOfExpertise.length === 0 ||
-        currentFilters.areasOfExpertise.some((area) => provider.areasOfExpertise.includes(area))
-      const matchesCountry =
-        currentFilters.countries.length === 0 ||
-        currentFilters.countries.includes(provider.location.split(",").pop()?.trim() || "")
+        currentFilters.areasOfExpertise.some((area) => {
+          if (Object.keys(areasOfExpertise).includes(area)) {
+            return areasOfExpertise[area as keyof typeof areasOfExpertise].some((subArea) =>
+              provider.areasOfExpertise.includes(subArea),
+            )
+          }
+          return provider.areasOfExpertise.includes(area)
+        })
+      const matchesFirmSize =
+        currentFilters.firmSize.length === 0 || currentFilters.firmSize.includes(provider.firmSize)
+      const matchesYearsInBusiness =
+        currentFilters.yearsInBusiness.length === 0 ||
+        currentFilters.yearsInBusiness.some((range) => {
+          const [min, max] = range.split("-").map(Number)
+          return provider.yearsInBusiness >= min && (max ? provider.yearsInBusiness <= max : true)
+        })
 
-      return matchesSearch && matchesMarkets && matchesSectors && matchesAreas && matchesCountry
+      return (
+        matchesSearch && matchesMarkets && matchesSectors && matchesAreas && matchesFirmSize && matchesYearsInBusiness
+      )
     })
 
     setSearchResults(results)
+  }
+
+  const toggleCategory = (category: string) => {
+    setExpandedCategories((prev) =>
+      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
+    )
   }
 
   const FiltersContent = () => (
@@ -103,24 +122,73 @@ export default function ProviderSearch() {
         items={allMarkets}
         selectedItems={filters.marketsServed}
         onChange={(value) => handleFilterChange("marketsServed", value)}
+        maxHeight="120px"
       />
+      <div className="mb-6">
+        <h4 className="font-medium mb-2">Areas of Expertise</h4>
+        <div className="space-y-2">
+          {Object.entries(areasOfExpertise).map(([category, subcategories]) => (
+            <div key={category} className="space-y-2">
+              <div className="flex items-center">
+                <Checkbox
+                  id={`category-${category}`}
+                  checked={filters.areasOfExpertise.includes(category)}
+                  onCheckedChange={() => handleFilterChange("areasOfExpertise", category)}
+                />
+                <Label htmlFor={`category-${category}`} className="ml-2 text-sm font-medium">
+                  {category}
+                </Label>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="ml-auto p-0 h-6 w-6"
+                  onClick={() => toggleCategory(category)}
+                >
+                  {expandedCategories.includes(category) ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+              {expandedCategories.includes(category) && (
+                <div className="ml-6 space-y-2">
+                  {subcategories.map((subcategory) => (
+                    <div key={subcategory} className="flex items-center">
+                      <Checkbox
+                        id={`subcategory-${subcategory}`}
+                        checked={filters.areasOfExpertise.includes(subcategory)}
+                        onCheckedChange={() => handleFilterChange("areasOfExpertise", subcategory)}
+                      />
+                      <Label htmlFor={`subcategory-${subcategory}`} className="ml-2 text-sm">
+                        {subcategory}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
       <FilterSection
         title="Sectors Served"
         items={allSectors}
         selectedItems={filters.sectorsServed}
         onChange={(value) => handleFilterChange("sectorsServed", value)}
+        maxHeight=""
       />
       <FilterSection
-        title="Areas of Expertise"
-        items={allAreas}
-        selectedItems={filters.areasOfExpertise}
-        onChange={(value) => handleFilterChange("areasOfExpertise", value)}
+        title="Firm Size"
+        items={firmSizes}
+        selectedItems={filters.firmSize}
+        onChange={(value) => handleFilterChange("firmSize", value)}
       />
       <FilterSection
-        title="Countries"
-        items={allCountries}
-        selectedItems={filters.countries}
-        onChange={(value) => handleFilterChange("countries", value)}
+        title="Years in Business"
+        items={yearsInBusinessRanges}
+        selectedItems={filters.yearsInBusiness}
+        onChange={(value) => handleFilterChange("yearsInBusiness", value)}
       />
     </>
   )
@@ -131,21 +199,23 @@ export default function ProviderSearch() {
       marketsServed: [],
       sectorsServed: [],
       areasOfExpertise: [],
-      countries: [],
+      firmSize: [],
+      yearsInBusiness: [],
     })
     router.push("/providers")
     filterResults("", {
       marketsServed: [],
       sectorsServed: [],
       areasOfExpertise: [],
-      countries: [],
+      firmSize: [],
+      yearsInBusiness: [],
     })
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
-      <main className="container mx-auto px-4 py-16">
+      <main className="container mx-auto px-4 py-4 md:py-16">
         <h2 className="text-4xl md:text-5xl font-bold max-w-4xl mx-auto mb-12 text-center">
           Search Sustainability Providers
         </h2>
@@ -203,16 +273,18 @@ function FilterSection({
   items,
   selectedItems,
   onChange,
+  maxHeight = "160px",
 }: {
   title: string
   items: string[]
   selectedItems: string[]
   onChange: (value: string) => void
+  maxHeight?: string
 }) {
   return (
     <div className="mb-6">
       <h4 className="font-medium mb-2">{title}</h4>
-      <div className="space-y-2 max-h-40 overflow-y-auto">
+      <div className={`space-y-2 overflow-y-auto`} style={{ maxHeight }}>
         {items.map((item) => (
           <div key={item} className="flex items-center">
             <Checkbox

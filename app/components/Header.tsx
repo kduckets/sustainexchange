@@ -12,12 +12,6 @@ export function Header() {
         </Link>
       </div>
       <div className="hidden md:flex items-center gap-4">
-      <Button variant="ghost" className="text-gray-700">
-          For Providers
-        </Button>
-        <Button variant="ghost" className="text-gray-700">
-          For Seekers
-        </Button>
         <Button variant="ghost" className="text-gray-700">
           About
         </Button>

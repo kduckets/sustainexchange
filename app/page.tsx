@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
-      <main className="container mx-auto px-4 py-16 text-center">
+      <main className="container mx-auto px-4 py-4 md:py-16 text-center">
         <h2 className="text-4xl md:text-5xl font-bold max-w-4xl mx-auto mb-12">
           Find top sustainability experts to tackle your toughest projects
         </h2>
@@ -70,10 +70,10 @@ export default function Home() {
         <div className="bg-white rounded-lg shadow-lg p-6 max-w-3xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <Link href="/rfx-hub">
             <Button className="bg-gradient-to-r from-blue-400 to-blue-600 text-white text-xl px-8 py-6 hover:from-blue-500 hover:to-blue-700">
-              RFX Hub
+              RFP Hub
             </Button>
           </Link>
-          <p className="text-lg">Post your RFP/I/Q today to attract top experts to your sustainability projects</p>
+          <p className="text-lg">Post your sustainability or ESG project today to attract top experts and service providers.</p>
         </div>
       </main>
     </div>

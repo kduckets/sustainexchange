@@ -1,4 +1,64 @@
-import type { ProviderProfile } from "@/types/provider-profile"
+export interface ProviderProfile {
+  id: string
+  name: string
+  logo: string
+  location: string
+  established: string
+  size: string
+  description: string
+  website: string
+  marketsServed: string[]
+  sectorsServed: string[]
+  areasOfExpertise: string[]
+  projects: {
+    partner: string
+    description: string
+    videoUrl?: string
+  }[]
+  testimonials: {
+    quote: string
+    author: string
+    title: string
+    company: string
+  }[]
+  firmSize: "Small" | "Mid-size" | "Large"
+  yearsInBusiness: number
+}
+
+export const areasOfExpertise = {
+  "Strategy & Planning": ["Net Zero & Decarbonization Planning", "Goal Setting", "Implementation Planning"],
+  "Technical Support": [
+    "Biodiversity",
+    "Building Design & Construction",
+    "Carbon Footprinting, GHG Accounting & Data Analysis",
+    "Circular Economy",
+    "Climate & Environmental Risk Assessment",
+    "Climate Adaptation",
+    "Environmental Justice",
+    "ESG & Sustainable Finance",
+    "Life Cycle Assessment",
+    "Product Sustainability",
+    "Renewable Energy & Energy Services",
+    "Supply Chain Sustainability",
+    "Transportation & Logistics",
+    "Waste Management",
+    "Water & Wastewater Management",
+  ],
+  "Auditing, Testing & Verification": [
+    "Carbon Credits & Offsets",
+    "GHG Emissions Verification",
+    "Science-Based Targets (SBTi) Validation",
+    "Sustainability & ESG Reporting Verification (e.g. GRI, SASB, TCFD, CDP)",
+    "Sustainable Building, Product & Other Certifications (e.g. LEED)",
+  ],
+  "PR & Communications": [
+    "Consumer Education & Behavior Change",
+    "Employee Training & Engagement",
+    "Stakeholder & Investor Communications",
+    "Sustainability & ESG Marketing & Branding",
+    "Sustainability & ESG Report Writing & Design",
+  ]
+}
 
 export const providers: ProviderProfile[] = [
   {
@@ -6,31 +66,47 @@ export const providers: ProviderProfile[] = [
     name: "3Degrees",
     logo: "/3degrees-logo.png?height=80&width=200",
     location: "San Francisco, CA, USA",
-    established: "2008",
+    established: "2007",
     size: "Mid-size firm",
     description:
-      "We make it possible for businesses and their customers to take urgent action on climate change. For over 15 years, our renewable energy, transportation decarbonization, and climate solutions have made it possible for businesses and utilities to answer the call for immediate and meaningful climate action.",
+      "3Degrees makes it possible for businesses and their customers to take urgent action on climate change. As a certified B Corporation, we provide renewable energy, transportation decarbonization, and emission reduction solutions to global Fortune 500 companies, utilities, and other organizations that want to join the fight against climate change.",
     website: "www.3degreesinc.com",
-    marketsServed: ["North America", "Europe"],
-    sectorsServed: ["Public", "Private", "Nonprofit"],
-    areasOfExpertise: ["Carbon Credits", "Strategy & Planning", "Transportation"],
+    marketsServed: ["North America", "Europe", "Asia"],
+    sectorsServed: [
+      "Energy or Utility",
+      "Technology",
+      "Industrial Goods and Manufacturing",
+      "Transportation and Warehousing",
+    ],
+    areasOfExpertise: [
+      "Strategy & Planning",
+      "Net Zero & Decarbonization Planning",
+      "Goal Setting",
+      "Technical Support",
+      "Renewable Energy & Energy Services",
+      "Carbon Footprinting, GHG Accounting & Data Analysis",
+      "Auditing, Testing & Verification",
+      "Carbon Credits & Offsets",
+    ],
     projects: [
       {
-        partner: "Merge Electric Fleet Solutions",
+        partner: "Etsy",
         description:
-          "3Degrees partnered with Merge to craft a fleet electrification roadmap for the MA-based solar company",
-        videoUrl: "https://youtu.be/gIfPUeebVI4?si=6Y0ih-GnM6A3N9FL",
+          "Helped Etsy become the first global ecommerce company to offset 100% of carbon emissions from shipping.",
+        videoUrl: "https://www.youtube.com/watch?v=example1",
       },
     ],
     testimonials: [
       {
         quote:
-          "As we increased our efforts to help fight climate change, 3Degrees has been an instrumental partner in Freshpet's sustainability journey. Their multi-disciplined climate science knowledge has allowed us to measure our carbon footprint and take meaningful actions that meet demands of our consumers, investors, and team members.",
-        author: "Justin Joyner",
-        title: "Sustainability Lead",
-        company: "Freshpet",
+          "3Degrees has been an invaluable partner in our journey to reduce our carbon footprint and transition to renewable energy.",
+        author: "John Smith",
+        title: "Sustainability Director",
+        company: "Tech Giant Inc.",
       },
     ],
+    firmSize: "Mid-size",
+    yearsInBusiness: new Date().getFullYear() - 2007,
   },
   {
     id: "accenture",
@@ -43,30 +119,47 @@ export const providers: ProviderProfile[] = [
       "Accenture is a global professional services company with leading capabilities in digital, cloud and security. Combining unmatched experience and specialized skills across more than 40 industries, we offer Strategy and Consulting, Technology and Operations services and Accenture Song—all powered by the world's largest network of Advanced Technology and Intelligent Operations centers.",
     website: "www.accenture.com",
     marketsServed: ["Global"],
-    sectorsServed: ["Public", "Private", "Nonprofit"],
-    areasOfExpertise: ["Strategy & Planning", "Technology & Innovation", "Sustainability Consulting"],
+    sectorsServed: [
+      "Energy or Utility",
+      "Technology",
+      "Financial Services and Insurance",
+      "Government/Public Administration",
+      "Industrial Goods and Manufacturing",
+    ],
+    areasOfExpertise: [
+      "Strategy & Planning",
+      "Net Zero & Decarbonization Planning",
+      "Implementation Planning",
+      "Technical Support",
+      "ESG & Sustainable Finance",
+      "Supply Chain Sustainability",
+      "PR & Communications",
+      "Sustainability & ESG Marketing & Branding",
+    ],
     projects: [
       {
         partner: "Schneider Electric",
         description:
-          "Accenture collaborated with Schneider Electric to develop and implement a comprehensive sustainability strategy, focusing on energy efficiency and carbon reduction across their global operations.",
-        videoUrl: "https://www.youtube.com/watch?v=Y9p_zEr6UjE",
+          "Collaborated on developing and implementing a comprehensive sustainability strategy, focusing on energy efficiency and carbon reduction across global operations.",
+        videoUrl: "https://www.youtube.com/watch?v=example2",
       },
     ],
     testimonials: [
       {
         quote:
-          "Accenture's expertise in sustainability and technology has been invaluable in our journey towards becoming a more environmentally responsible company. Their innovative solutions and strategic guidance have helped us achieve significant reductions in our carbon footprint while improving our operational efficiency.",
+          "Accenture's expertise in sustainability and technology has been invaluable in our journey towards becoming a more environmentally responsible company.",
         author: "Jean-Pascal Tricoire",
         title: "Chairman and CEO",
         company: "Schneider Electric",
       },
     ],
+    firmSize: "Large",
+    yearsInBusiness: new Date().getFullYear() - 1989,
   },
   {
     id: "erm",
     name: "ERM (Environmental Resources Management)",
-    logo: "/ERM-logo.png?height=80&width=200",
+    logo: "/erm-logo.png?height=80&width=200",
     location: "London, UK",
     established: "1971",
     size: "Large firm",
@@ -74,12 +167,24 @@ export const providers: ProviderProfile[] = [
       "ERM is the largest global pure-play sustainability consultancy. We partner with the world's leading organizations to create innovative solutions to sustainability challenges and unlock commercial opportunities that meet the needs of today while preserving opportunities for future generations.",
     website: "www.erm.com",
     marketsServed: ["Global"],
-    sectorsServed: ["Oil & Gas", "Mining", "Power", "Manufacturing", "Chemical", "Technology"],
+    sectorsServed: [
+      "Energy or Utility",
+      "Industrial Goods and Manufacturing",
+      "Technology",
+      "Professional and Technical Services",
+      "Government/Public Administration",
+    ],
     areasOfExpertise: [
-      "Environmental & Social Impact Assessment",
-      "Climate Change & Energy",
-      "ESG & Sustainability",
-      "Safety & Risk",
+      "Strategy & Planning",
+      "Net Zero & Decarbonization Planning",
+      "Implementation Planning",
+      "Technical Support",
+      "Climate & Environmental Risk Assessment",
+      "ESG & Sustainable Finance",
+      "Auditing, Testing & Verification",
+      "Sustainability & ESG Reporting Verification (e.g. GRI, SASB, TCFD, CDP)",
+      "PR & Communications",
+      "Stakeholder & Investor Communications",
     ],
     projects: [
       {
@@ -98,6 +203,8 @@ export const providers: ProviderProfile[] = [
         company: "Global Mining Corp",
       },
     ],
+    firmSize: "Large",
+    yearsInBusiness: new Date().getFullYear() - 1971,
   },
   {
     id: "wspsustainability",
@@ -110,8 +217,26 @@ export const providers: ProviderProfile[] = [
       "WSP is one of the world's leading professional services consulting firms. We provide strategic advisory, engineering, and design services to clients in the Transportation & Infrastructure, Property & Buildings, Earth & Environment, Power & Energy, Resources, and Industry sectors.",
     website: "www.wsp.com",
     marketsServed: ["Global"],
-    sectorsServed: ["Transportation", "Buildings", "Environment", "Energy", "Resources", "Industry"],
-    areasOfExpertise: ["Climate Resilience", "Sustainable Buildings", "Environmental Planning", "Energy Transition"],
+    sectorsServed: [
+      "Transportation and Warehousing",
+      "Real Estate",
+      "Energy or Utility",
+      "Industrial Goods and Manufacturing",
+      "Government/Public Administration",
+    ],
+    areasOfExpertise: [
+      "Strategy & Planning",
+      "Net Zero & Decarbonization Planning",
+      "Implementation Planning",
+      "Technical Support",
+      "Building Design & Construction",
+      "Climate Adaptation",
+      "Renewable Energy & Energy Services",
+      "Auditing, Testing & Verification",
+      "Sustainable Building, Product & Other Certifications (e.g. LEED)",
+      "PR & Communications",
+      "Sustainability & ESG Marketing & Branding",
+    ],
     projects: [
       {
         partner: "City of Toronto",
@@ -129,6 +254,8 @@ export const providers: ProviderProfile[] = [
         company: "City of Toronto",
       },
     ],
+    firmSize: "Large",
+    yearsInBusiness: new Date().getFullYear() - 1959,
   },
   {
     id: "dnvgl",
@@ -141,8 +268,21 @@ export const providers: ProviderProfile[] = [
       "DNV is an independent assurance and risk management provider, operating in more than 100 countries. We provide assurance to the entire energy value chain through our advisory, monitoring, verification, and certification services.",
     website: "www.dnv.com",
     marketsServed: ["Global"],
-    sectorsServed: ["Maritime", "Oil & Gas", "Energy Systems", "Business Assurance"],
-    areasOfExpertise: ["Renewable Energy", "Energy Efficiency", "Climate Action", "Sustainable Finance"],
+    sectorsServed: [
+      "Energy or Utility",
+      "Transportation and Warehousing",
+      "Industrial Goods and Manufacturing",
+      "Professional and Technical Services",
+    ],
+    areasOfExpertise: [
+      "Strategy & Planning",
+      "Net Zero & Decarbonization Planning",
+      "Technical Support",
+      "Renewable Energy & Energy Services",
+      "Auditing, Testing & Verification",
+      "GHG Emissions Verification",
+      "Science-Based Targets (SBTi) Validation",
+    ],
     projects: [
       {
         partner: "Ørsted",
@@ -160,11 +300,13 @@ export const providers: ProviderProfile[] = [
         company: "Ørsted",
       },
     ],
+    firmSize: "Large",
+    yearsInBusiness: new Date().getFullYear() - 1864,
   },
   {
     id: "sustainalytics",
     name: "Sustainalytics",
-    logo: "/Sustainalytics-Logo.png?height=80&width=200",
+    logo: "/sustainalytics-logo.png?height=80&width=200",
     location: "Amsterdam, Netherlands",
     established: "1992",
     size: "Mid-size firm",
@@ -172,8 +314,17 @@ export const providers: ProviderProfile[] = [
       "Sustainalytics, a Morningstar company, is a leading independent ESG and corporate governance research, ratings and analytics firm that supports investors around the world with the development and implementation of responsible investment strategies.",
     website: "www.sustainalytics.com",
     marketsServed: ["Global"],
-    sectorsServed: ["Financial Services", "Asset Management", "Corporate"],
-    areasOfExpertise: ["ESG Risk Ratings", "Sustainable Finance", "Impact Investing", "Corporate ESG Assessment"],
+    sectorsServed: ["Financial Services and Insurance", "Professional and Technical Services"],
+    areasOfExpertise: [
+      "Strategy & Planning",
+      "Goal Setting",
+      "Technical Support",
+      "ESG & Sustainable Finance",
+      "Auditing, Testing & Verification",
+      "Sustainability & ESG Reporting Verification (e.g. GRI, SASB, TCFD, CDP)",
+      "PR & Communications",
+      "Stakeholder & Investor Communications",
+    ],
     projects: [
       {
         partner: "Major European Bank",
@@ -191,6 +342,8 @@ export const providers: ProviderProfile[] = [
         company: "Nordic Asset Management",
       },
     ],
+    firmSize: "Mid-size",
+    yearsInBusiness: new Date().getFullYear() - 1992,
   },
 ]
 
