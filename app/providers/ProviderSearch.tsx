@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Header } from "@/app/components/Header"
 import { SearchResults } from "@/app/components/SearchResults"
-import { LoadingState } from "@/app/components/LoadingState"
 import { providers, areasOfExpertise } from "@/data/providers"
 import { useState, useMemo, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
@@ -82,7 +81,6 @@ export default function ProviderSearch() {
   })
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [expandedCategories, setExpandedCategories] = useState<string[]>([])
-  const [isLoading, setIsLoading] = useState(true)
 
   const allMarkets = useMemo(() => {
     const markets = Array.from(new Set(providers.flatMap((p) => p.marketsServed)))
@@ -101,22 +99,14 @@ export default function ProviderSearch() {
         ...prev,
         areasOfExpertise: expertise ? [expertise] : prev.areasOfExpertise,
       }
-      setIsLoading(true)
-      setTimeout(() => {
-        setSearchResults(filterResults(query, newFilters, providers))
-        setIsLoading(false)
-      }, 1000) // Simulate loading delay
+      setSearchResults(filterResults(query, newFilters, providers))
       return newFilters
     })
   }, [searchParams])
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
-    setIsLoading(true)
-    setTimeout(() => {
-      setSearchResults(filterResults(query, filters, providers))
-      setIsLoading(false)
-    }, 1000) // Simulate loading delay
+    setSearchResults(filterResults(query, filters, providers))
   }
 
   const handleFilterChange = (category: keyof Filters, value: string) => {
@@ -127,11 +117,7 @@ export default function ProviderSearch() {
           ? prev[category].filter((item) => item !== value)
           : [...prev[category], value],
       }
-      setIsLoading(true)
-      setTimeout(() => {
-        setSearchResults(filterResults(searchQuery, updatedFilters, providers))
-        setIsLoading(false)
-      }, 1000) // Simulate loading delay
+      setSearchResults(filterResults(searchQuery, updatedFilters, providers))
       return updatedFilters
     })
   }
@@ -143,17 +129,16 @@ export default function ProviderSearch() {
   }
 
   const FiltersContent = () => (
-    <>
+    <div className="space-y-6">
       <FilterSection
         title="Markets Served"
         items={allMarkets}
         selectedItems={filters.marketsServed}
         onChange={(value) => handleFilterChange("marketsServed", value)}
-        maxHeight="120px"
       />
       <div className="mb-6">
         <h4 className="font-medium mb-2">Areas of Expertise</h4>
-        <div className="space-y-2">
+        <div className="space-y-2 max-h-[300px] overflow-y-auto">
           {Object.entries(areasOfExpertise).map(([category, subcategories]) => (
             <div key={category} className="space-y-2">
               <div className="flex items-center">
@@ -203,7 +188,6 @@ export default function ProviderSearch() {
         items={allSectors}
         selectedItems={filters.sectorsServed}
         onChange={(value) => handleFilterChange("sectorsServed", value)}
-        maxHeight=""
       />
       <FilterSection
         title="Firm Size"
@@ -217,7 +201,7 @@ export default function ProviderSearch() {
         selectedItems={filters.yearsInBusiness}
         onChange={(value) => handleFilterChange("yearsInBusiness", value)}
       />
-    </>
+    </div>
   )
 
   const clearAll = () => {
@@ -231,11 +215,7 @@ export default function ProviderSearch() {
     }
     setFilters(clearedFilters)
     router.push("/providers")
-    setIsLoading(true)
-    setTimeout(() => {
-      setSearchResults(filterResults("", clearedFilters, providers))
-      setIsLoading(false)
-    }, 1000) // Simulate loading delay
+    setSearchResults(filterResults("", clearedFilters, providers))
   }
 
   return (
@@ -264,12 +244,14 @@ export default function ProviderSearch() {
                 <Filter className="mr-2 h-4 w-4" /> Filters
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-              <SheetHeader>
-                <SheetTitle>Filters</SheetTitle>
-              </SheetHeader>
-              <div className="mt-4">
-                <FiltersContent />
+            <SheetContent side="left" className="w-full sm:w-[400px] p-0">
+              <div className="h-full flex flex-col">
+                <SheetHeader className="p-6 pb-0">
+                  <SheetTitle>Filters</SheetTitle>
+                </SheetHeader>
+                <div className="flex-1 overflow-y-auto p-6">
+                  <FiltersContent />
+                </div>
               </div>
             </SheetContent>
           </Sheet>
@@ -281,16 +263,12 @@ export default function ProviderSearch() {
             <FiltersContent />
           </div>
           <div>
-            {isLoading ? (
-              <LoadingState />
-            ) : (
-              <SearchResults
-                results={searchResults}
-                searchQuery={searchQuery}
-                activeFilters={filters}
-                onClearAll={clearAll}
-              />
-            )}
+            <SearchResults
+              results={searchResults}
+              searchQuery={searchQuery}
+              activeFilters={filters}
+              onClearAll={clearAll}
+            />
           </div>
         </div>
       </main>
@@ -303,7 +281,7 @@ function FilterSection({
   items,
   selectedItems,
   onChange,
-  maxHeight = "160px",
+  maxHeight = "200px",
 }: {
   title: string
   items: string[]
