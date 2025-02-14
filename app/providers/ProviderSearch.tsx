@@ -8,60 +8,22 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Header } from "@/app/components/Header"
 import { SearchResults } from "@/app/components/SearchResults"
+import { LoadingState } from "@/app/components/LoadingState"
 import { providers, areasOfExpertise } from "@/data/providers"
 import { useState, useMemo, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 
-export default function ProviderSearch() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [searchResults, setSearchResults] = useState<typeof providers>([])
-  const [searchQuery, setSearchQuery] = useState("")
-  const [filters, setFilters] = useState({
-    marketsServed: [] as string[],
-    sectorsServed: [] as string[],
-    areasOfExpertise: [] as string[],
-    firmSize: [] as string[],
-    yearsInBusiness: [] as string[],
-  })
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [expandedCategories, setExpandedCategories] = useState<string[]>([])
+type Filters = {
+  marketsServed: string[]
+  sectorsServed: string[]
+  areasOfExpertise: string[]
+  firmSize: string[]
+  yearsInBusiness: string[]
+}
 
-  const allMarkets = useMemo(() => {
-    const markets = Array.from(new Set(providers.flatMap((p) => p.marketsServed)))
-    return markets.includes("Global") ? markets : ["Global", ...markets]
-  }, [])
-  const allSectors = useMemo(() => Array.from(new Set(providers.flatMap((p) => p.sectorsServed))), [])
-  const firmSizes = ["Small", "Mid-size", "Large"]
-  const yearsInBusinessRanges = ["0-5 years", "6-10 years", "11-20 years", "21+ years"]
-
-  useEffect(() => {
-    const query = searchParams.get("q") || ""
-    setSearchQuery(query)
-    filterResults(query, filters)
-  }, [searchParams, filters])
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query)
-    filterResults(query, filters)
-  }
-
-  const handleFilterChange = (category: keyof typeof filters, value: string) => {
-    setFilters((prev) => {
-      const updatedFilters = {
-        ...prev,
-        [category]: prev[category].includes(value)
-          ? prev[category].filter((item) => item !== value)
-          : [...prev[category], value],
-      }
-      filterResults(searchQuery, updatedFilters)
-      return updatedFilters
-    })
-  }
-
-  const filterResults = (query: string, currentFilters: typeof filters) => {
-    const results = providers.filter((provider) => {
-      const searchableText = `
+const filterResults = (query: string, currentFilters: Filters, providersList: typeof providers) => {
+  return providersList.filter((provider) => {
+    const searchableText = `
         ${provider.name}
         ${provider.description}
         ${provider.location}
@@ -73,40 +35,105 @@ export default function ProviderSearch() {
         ${provider.testimonials.map((t) => `${t.quote} ${t.author} ${t.title} ${t.company}`).join(" ")}
       `.toLowerCase()
 
-      const matchesSearch = query.trim() === "" || searchableText.includes(query.toLowerCase())
-      const matchesMarkets =
-        currentFilters.marketsServed.length === 0 ||
-        currentFilters.marketsServed.some(
-          (market) => provider.marketsServed.includes(market) || provider.marketsServed.includes("Global"),
-        )
-      const matchesSectors =
-        currentFilters.sectorsServed.length === 0 ||
-        currentFilters.sectorsServed.some((sector) => provider.sectorsServed.includes(sector))
-      const matchesAreas =
-        currentFilters.areasOfExpertise.length === 0 ||
-        currentFilters.areasOfExpertise.some((area) => {
-          if (Object.keys(areasOfExpertise).includes(area)) {
-            return areasOfExpertise[area as keyof typeof areasOfExpertise].some((subArea) =>
-              provider.areasOfExpertise.includes(subArea),
-            )
-          }
-          return provider.areasOfExpertise.includes(area)
-        })
-      const matchesFirmSize =
-        currentFilters.firmSize.length === 0 || currentFilters.firmSize.includes(provider.firmSize)
-      const matchesYearsInBusiness =
-        currentFilters.yearsInBusiness.length === 0 ||
-        currentFilters.yearsInBusiness.some((range) => {
-          const [min, max] = range.split("-").map(Number)
-          return provider.yearsInBusiness >= min && (max ? provider.yearsInBusiness <= max : true)
-        })
-
-      return (
-        matchesSearch && matchesMarkets && matchesSectors && matchesAreas && matchesFirmSize && matchesYearsInBusiness
+    const matchesSearch = query.trim() === "" || searchableText.includes(query.toLowerCase())
+    const matchesMarkets =
+      currentFilters.marketsServed.length === 0 ||
+      currentFilters.marketsServed.some(
+        (market) => provider.marketsServed.includes(market) || provider.marketsServed.includes("Global"),
       )
-    })
+    const matchesSectors =
+      currentFilters.sectorsServed.length === 0 ||
+      currentFilters.sectorsServed.some((sector) => provider.sectorsServed.includes(sector))
+    const matchesAreas =
+      currentFilters.areasOfExpertise.length === 0 ||
+      currentFilters.areasOfExpertise.some((area) => {
+        if (Object.keys(areasOfExpertise).includes(area)) {
+          return areasOfExpertise[area as keyof typeof areasOfExpertise].some((subArea) =>
+            provider.areasOfExpertise.includes(subArea),
+          )
+        }
+        return provider.areasOfExpertise.includes(area)
+      })
+    const matchesFirmSize = currentFilters.firmSize.length === 0 || currentFilters.firmSize.includes(provider.firmSize)
+    const matchesYearsInBusiness =
+      currentFilters.yearsInBusiness.length === 0 ||
+      currentFilters.yearsInBusiness.some((range) => {
+        const [min, max] = range.split("-").map(Number)
+        return provider.yearsInBusiness >= min && (max ? provider.yearsInBusiness <= max : true)
+      })
 
-    setSearchResults(results)
+    return (
+      matchesSearch && matchesMarkets && matchesSectors && matchesAreas && matchesFirmSize && matchesYearsInBusiness
+    )
+  })
+}
+
+export default function ProviderSearch() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [searchResults, setSearchResults] = useState<typeof providers>([])
+  const [searchQuery, setSearchQuery] = useState("")
+  const [filters, setFilters] = useState<Filters>({
+    marketsServed: [],
+    sectorsServed: [],
+    areasOfExpertise: [],
+    firmSize: [],
+    yearsInBusiness: [],
+  })
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  const allMarkets = useMemo(() => {
+    const markets = Array.from(new Set(providers.flatMap((p) => p.marketsServed)))
+    return markets.includes("Global") ? markets : ["Global", ...markets]
+  }, [])
+  const allSectors = useMemo(() => Array.from(new Set(providers.flatMap((p) => p.sectorsServed))), [])
+  const firmSizes = ["Small", "Mid-size", "Large"]
+  const yearsInBusinessRanges = ["0-5 years", "6-10 years", "11-20 years", "21+ years"]
+
+  useEffect(() => {
+    const query = searchParams.get("q") || ""
+    const expertise = searchParams.get("expertise") || ""
+    setSearchQuery(query)
+    setFilters((prev) => {
+      const newFilters = {
+        ...prev,
+        areasOfExpertise: expertise ? [expertise] : prev.areasOfExpertise,
+      }
+      setIsLoading(true)
+      setTimeout(() => {
+        setSearchResults(filterResults(query, newFilters, providers))
+        setIsLoading(false)
+      }, 1000) // Simulate loading delay
+      return newFilters
+    })
+  }, [searchParams])
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query)
+    setIsLoading(true)
+    setTimeout(() => {
+      setSearchResults(filterResults(query, filters, providers))
+      setIsLoading(false)
+    }, 1000) // Simulate loading delay
+  }
+
+  const handleFilterChange = (category: keyof Filters, value: string) => {
+    setFilters((prev) => {
+      const updatedFilters = {
+        ...prev,
+        [category]: prev[category].includes(value)
+          ? prev[category].filter((item) => item !== value)
+          : [...prev[category], value],
+      }
+      setIsLoading(true)
+      setTimeout(() => {
+        setSearchResults(filterResults(searchQuery, updatedFilters, providers))
+        setIsLoading(false)
+      }, 1000) // Simulate loading delay
+      return updatedFilters
+    })
   }
 
   const toggleCategory = (category: string) => {
@@ -195,27 +222,26 @@ export default function ProviderSearch() {
 
   const clearAll = () => {
     setSearchQuery("")
-    setFilters({
+    const clearedFilters: Filters = {
       marketsServed: [],
       sectorsServed: [],
       areasOfExpertise: [],
       firmSize: [],
       yearsInBusiness: [],
-    })
+    }
+    setFilters(clearedFilters)
     router.push("/providers")
-    filterResults("", {
-      marketsServed: [],
-      sectorsServed: [],
-      areasOfExpertise: [],
-      firmSize: [],
-      yearsInBusiness: [],
-    })
+    setIsLoading(true)
+    setTimeout(() => {
+      setSearchResults(filterResults("", clearedFilters, providers))
+      setIsLoading(false)
+    }, 1000) // Simulate loading delay
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
-      <main className="container mx-auto px-4 py-4 md:py-16">
+      <main className="container mx-auto px-4 py-16">
         <h2 className="text-4xl md:text-5xl font-bold max-w-4xl mx-auto mb-12 text-center">
           Search Sustainability Providers
         </h2>
@@ -255,12 +281,16 @@ export default function ProviderSearch() {
             <FiltersContent />
           </div>
           <div>
-            <SearchResults
-              results={searchResults}
-              searchQuery={searchQuery}
-              activeFilters={filters}
-              onClearAll={clearAll}
-            />
+            {isLoading ? (
+              <LoadingState />
+            ) : (
+              <SearchResults
+                results={searchResults}
+                searchQuery={searchQuery}
+                activeFilters={filters}
+                onClearAll={clearAll}
+              />
+            )}
           </div>
         </div>
       </main>

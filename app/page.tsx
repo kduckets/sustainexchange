@@ -55,16 +55,27 @@ export default function Home() {
           </div>
         </div>
 
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-16 mt-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-16">
           <ServiceCard
             icon={<ClipboardCheck className="w-12 h-12" />}
             title="Strategy & Planning"
-            href="/strategy-planning"
+            href="/providers?expertise=Strategy%20%26%20Planning"
           />
-          <ServiceCard icon={<Wrench className="w-12 h-12" />} title="Technical Support" href="/" />
-          <ServiceCard icon={<Calculator className="w-12 h-12" />} title="Auditing & M&V" href="/" />
-          <ServiceCard icon={<FileText className="w-12 h-12" />} title="Reporting & Communications" href="/"/>
+          <ServiceCard
+            icon={<Wrench className="w-12 h-12" />}
+            title="Technical Support"
+            href="/providers?expertise=Technical%20Support"
+          />
+          <ServiceCard
+            icon={<Calculator className="w-12 h-12" />}
+            title="Auditing, Testing & Verification"
+            href="/providers?expertise=Auditing%2C%20Testing%20%26%20Verification"
+          />
+          <ServiceCard
+            icon={<FileText className="w-12 h-12" />}
+            title="PR & Communications"
+            href="/providers?expertise=PR%20%26%20Communications"
+          />
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6 max-w-3xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
@@ -87,23 +98,15 @@ function ServiceCard({
 }: {
   icon: React.ReactNode
   title: string
-  href?: string
+  href: string
 }) {
-  const CardContent = (
-    <div className="flex flex-col h-full items-center gap-4 p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-      <div className="text-blue-600">{icon}</div>
-      <h3 className="font-semibold text-center">{title}</h3>
-    </div>
+  return (
+    <Link href={`${href}`} className="block">
+       <div className="h-full flex flex-col items-center gap-4 p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+        <div className="text-blue-600">{icon}</div>
+        <h3 className="font-semibold text-center">{title}</h3>
+      </div>
+    </Link>
   )
-
-  if (href) {
-    return (
-      <Link href={href} className="block">
-        {CardContent}
-      </Link>
-    )
-  }
-
-  return CardContent
 }
 
