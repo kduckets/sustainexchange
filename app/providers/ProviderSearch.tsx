@@ -141,7 +141,7 @@ export default function ProviderSearch() {
         onChange={(value) => handleFilterChange("marketsServed", value)}
       />
       <div className="mb-6">
-        <h4 className="font-medium mb-2">Areas of Expertise</h4>
+        <h4 className="font-medium mb-2">Specializations</h4>
         <div className="space-y-2 max-h-[300px] overflow-y-auto">
           {Object.entries(areasOfExpertise).map(([category, subcategories]) => (
             <div key={category} className="space-y-2">

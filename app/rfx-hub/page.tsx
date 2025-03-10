@@ -26,9 +26,9 @@ const rfxData = [
     posted: "02/10/2025 - 12:00PM",
     due: "02/24/2025 - 12:00PM",
     contact: {
-      name: "PAOLA REYES",
-      email: "PAOLA.REYES@BOSTON.GOV",
-      phone: "617-635-3066",
+      name: "Emily Lawson",
+      email: "emily.lawson@boston.gov",
+      phone: "555-987-6543",
     },
   },
 ]

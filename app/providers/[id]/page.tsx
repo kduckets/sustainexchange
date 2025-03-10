@@ -62,7 +62,7 @@ export default function ProviderProfile({ params }: { params: { id: string } }) 
               <p>{provider.sectorsServed.join(", ")}</p>
             </div>
             <div>
-              <h2 className="font-semibold underline mb-2">Areas of Expertise:</h2>
+              <h2 className="font-semibold underline mb-2">Specializations:</h2>
               <p>{provider.areasOfExpertise.join(", ")}</p>
             </div>
           </div>
