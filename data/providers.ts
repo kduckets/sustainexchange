@@ -348,7 +348,7 @@ export const providers: ProviderProfile[] = [
   {
     id: "cadmus",
     name: "Cadmus Group",
-    logo: "/placeholder.svg?height=80&width=200",
+    logo: "/cadmus-logo.png?height=80&width=200",
     location: "Waltham, MA, USA",
     established: "1983",
     size: "Mid-size firm",
@@ -396,7 +396,7 @@ export const providers: ProviderProfile[] = [
   {
     id: "howerimpact",
     name: "Hower Impact",
-    logo: "/placeholder.svg?height=80&width=200",
+    logo: "/hower-impact-logo.png?height=80&width=200",
     location: "New York, NY, USA",
     established: "2015",
     size: "Small firm",
