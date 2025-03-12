@@ -40,11 +40,11 @@ export default function RFXHub() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
-      <main className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">RFX Hub</h1>
-        <p className="text-xl text-center mb-12">Post and search for sustainability RFPs/RFIs/RFQs here today</p>
+      <main className="container mx-auto px-4 py-4 md:py-8">
+        <h1 className="text-3xl md:text-4xl max-w-4xl mx-auto mb-4 md:mb-8 text-center">RFX Hub</h1>
+        <p className="text-xl text-center mb-4 md:mb-8">Post and search for sustainability RFPs/RFIs/RFQs here today</p>
 
-        <div className="bg-gray-100 p-6 rounded-lg mb-8">
+        <div className="bg-gray-100 p-6 rounded-lg mb-4 md:mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Select>
               <SelectTrigger>
