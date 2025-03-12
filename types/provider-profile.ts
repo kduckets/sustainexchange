@@ -22,7 +22,7 @@ export interface ProviderProfile {
   website: string
   marketsServed: string[]
   sectorsServed: string[]
-  areasOfExpertise: string[]
+  specializations: string[]
   projects: Project[]
   testimonials: Testimonial[]
   firmSize: "Small" | "Mid-size" | "Large"

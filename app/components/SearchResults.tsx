@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import type { ProviderProfile } from "@/types/provider-profile"
@@ -10,7 +12,7 @@ interface SearchResultsProps {
   activeFilters: {
     marketsServed: string[]
     sectorsServed: string[]
-    areasOfExpertise: string[]
+    specializations: string[]
   }
   onClearAll: () => void
 }
@@ -71,14 +73,14 @@ export function SearchResults({ results, searchQuery, activeFilters, onClearAll 
                     <p className="text-gray-600 mb-2">{provider.location}</p>
                     <p className="text-sm text-gray-500 mb-4">{provider.description.substring(0, 150)}...</p>
                     <div className="flex flex-wrap gap-2">
-                      {provider.areasOfExpertise.slice(0, 3).map((area, index) => (
+                      {provider.specializations.slice(0, 3).map((area, index) => (
                         <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
                           {area}
                         </span>
                       ))}
-                      {provider.areasOfExpertise.length > 3 && (
+                      {provider.specializations.length > 3 && (
                         <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
-                          +{provider.areasOfExpertise.length - 3} more
+                          +{provider.specializations.length - 3} more
                         </span>
                       )}
                     </div>

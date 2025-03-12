@@ -9,7 +9,7 @@ export interface ProviderProfile {
   website: string
   marketsServed: string[]
   sectorsServed: string[]
-  areasOfExpertise: string[]
+  specializations: string[]
   projects: {
     partner: string
     description: string
@@ -25,19 +25,28 @@ export interface ProviderProfile {
   yearsInBusiness: number
 }
 
-export const areasOfExpertise = {
-  "Strategy & Planning": ["Net Zero & Decarbonization Planning", "Goal Setting", "Implementation Planning"],
+export const specializations = {
+  "Strategy & Planning": [
+    "Sustainability Strategy Development",
+    "Sustainable Business Model Innovation",
+    "Materiality Assessment",
+    "ESG Risk Management & Governance",
+    "Net Zero & Decarbonization Planning",
+    "Goal Setting",
+    "Implementation Planning",
+  ],
   "Technical Support": [
     "Biodiversity",
     "Building Design & Construction",
-    "Carbon Footprinting, GHG Accounting & Data Analysis",
+    "Carbon Footprint Assessment, GHG Accounting & Data Analysis",
     "Circular Economy",
     "Climate & Environmental Risk Assessment",
     "Climate Adaptation",
     "Environmental Justice",
     "ESG & Sustainable Finance",
-    "Life Cycle Assessment",
-    "Product Sustainability",
+    "Life Cycle Assessment (LCA)",
+    "Nature-based Solutions",
+    "Product & Packaging Innovation Sustainability",
     "Renewable Energy & Energy Services",
     "Supply Chain Sustainability",
     "Transportation & Logistics",
@@ -45,20 +54,54 @@ export const areasOfExpertise = {
     "Water & Wastewater Management",
   ],
   "Auditing, Testing & Verification": [
+    "Third-Party ESG Auditing, Benchmarking & Compliance",
     "Carbon Credits & Offsets",
     "GHG Emissions Verification",
     "Science-Based Targets (SBTi) Validation",
-    "Sustainability & ESG Reporting Verification (e.g. GRI, SASB, TCFD, CDP)",
-    "Sustainable Building, Product & Other Certifications (e.g. LEED)",
+    "Sustainability Certifications & Standards",
+    "ESG Ratings & Investor Assessments",
   ],
   "PR & Communications": [
     "Consumer Education & Behavior Change",
-    "Employee Training & Engagement",
+    "Employee Training & Stakeholder Engagement",
     "Stakeholder & Investor Communications",
     "Sustainability & ESG Marketing & Branding",
-    "Sustainability & ESG Report Writing & Design",
-  ]
+    "Sustainability & ESG Reporting",
+  ],
 }
+
+// Standard markets list
+export const standardMarkets = [
+  "Global",
+  "North America",
+  "Europe",
+  "Asia",
+  "Latin America",
+  "Middle East",
+  "Africa",
+  "Australia (Oceania)",
+]
+
+// Standard sectors list
+export const standardSectors = [
+  "Arts, Media, Entertainment",
+  "Automotive",
+  "College or University",
+  "Consumer Packaged Goods",
+  "Energy or Utility",
+  "Financial Services and Insurance",
+  "Food Services",
+  "Government/Public Administration",
+  "Health Care",
+  "Hospitality",
+  "Industrial Goods and Manufacturing",
+  "Technology",
+  "Nonprofit",
+  "Professional and Technical Services",
+  "Real Estate",
+  "Retail and Apparel",
+  "Transportation and Warehousing",
+]
 
 export const providers: ProviderProfile[] = [
   {
@@ -77,14 +120,15 @@ export const providers: ProviderProfile[] = [
       "Technology",
       "Industrial Goods and Manufacturing",
       "Transportation and Warehousing",
+      "Consumer Packaged Goods",
     ],
-    areasOfExpertise: [
+    specializations: [
       "Strategy & Planning",
       "Net Zero & Decarbonization Planning",
       "Goal Setting",
       "Technical Support",
       "Renewable Energy & Energy Services",
-      "Carbon Footprinting, GHG Accounting & Data Analysis",
+      "Carbon Footprint Assessment, GHG Accounting & Data Analysis",
       "Auditing, Testing & Verification",
       "Carbon Credits & Offsets",
     ],
@@ -125,9 +169,13 @@ export const providers: ProviderProfile[] = [
       "Financial Services and Insurance",
       "Government/Public Administration",
       "Industrial Goods and Manufacturing",
+      "Retail and Apparel",
+      "Health Care",
     ],
-    areasOfExpertise: [
+    specializations: [
       "Strategy & Planning",
+      "Sustainability Strategy Development",
+      "Sustainable Business Model Innovation",
       "Net Zero & Decarbonization Planning",
       "Implementation Planning",
       "Technical Support",
@@ -173,16 +221,21 @@ export const providers: ProviderProfile[] = [
       "Technology",
       "Professional and Technical Services",
       "Government/Public Administration",
+      "Automotive",
+      "Consumer Packaged Goods",
     ],
-    areasOfExpertise: [
+    specializations: [
       "Strategy & Planning",
+      "Sustainability Strategy Development",
+      "Materiality Assessment",
+      "ESG Risk Management & Governance",
       "Net Zero & Decarbonization Planning",
       "Implementation Planning",
       "Technical Support",
       "Climate & Environmental Risk Assessment",
       "ESG & Sustainable Finance",
       "Auditing, Testing & Verification",
-      "Sustainability & ESG Reporting Verification (e.g. GRI, SASB, TCFD, CDP)",
+      "Third-Party ESG Auditing, Benchmarking & Compliance",
       "PR & Communications",
       "Stakeholder & Investor Communications",
     ],
@@ -223,8 +276,9 @@ export const providers: ProviderProfile[] = [
       "Energy or Utility",
       "Industrial Goods and Manufacturing",
       "Government/Public Administration",
+      "Automotive",
     ],
-    areasOfExpertise: [
+    specializations: [
       "Strategy & Planning",
       "Net Zero & Decarbonization Planning",
       "Implementation Planning",
@@ -233,9 +287,9 @@ export const providers: ProviderProfile[] = [
       "Climate Adaptation",
       "Renewable Energy & Energy Services",
       "Auditing, Testing & Verification",
-      "Sustainable Building, Product & Other Certifications (e.g. LEED)",
+      "Sustainability Certifications & Standards",
       "PR & Communications",
-      "Sustainability & ESG Marketing & Branding",
+      "Sustainability & ESG Reporting",
     ],
     projects: [
       {
@@ -267,14 +321,16 @@ export const providers: ProviderProfile[] = [
     description:
       "DNV is an independent assurance and risk management provider, operating in more than 100 countries. We provide assurance to the entire energy value chain through our advisory, monitoring, verification, and certification services.",
     website: "www.dnv.com",
-    marketsServed: ["Global"],
+    marketsServed: ["North America", "Europe", "Asia", "Middle East"],
     sectorsServed: [
       "Energy or Utility",
       "Transportation and Warehousing",
       "Industrial Goods and Manufacturing",
       "Professional and Technical Services",
+      "Automotive",
+      "Technology",
     ],
-    areasOfExpertise: [
+    specializations: [
       "Strategy & Planning",
       "Net Zero & Decarbonization Planning",
       "Technical Support",
@@ -313,15 +369,23 @@ export const providers: ProviderProfile[] = [
     description:
       "Sustainalytics, a Morningstar company, is a leading independent ESG and corporate governance research, ratings and analytics firm that supports investors around the world with the development and implementation of responsible investment strategies.",
     website: "www.sustainalytics.com",
-    marketsServed: ["Global"],
-    sectorsServed: ["Financial Services and Insurance", "Professional and Technical Services"],
-    areasOfExpertise: [
+    marketsServed: ["North America", "Europe", "Asia"],
+    sectorsServed: [
+      "Financial Services and Insurance",
+      "Professional and Technical Services",
+      "Energy or Utility",
+      "Technology",
+      "Retail and Apparel",
+    ],
+    specializations: [
       "Strategy & Planning",
+      "ESG Risk Management & Governance",
       "Goal Setting",
       "Technical Support",
       "ESG & Sustainable Finance",
       "Auditing, Testing & Verification",
-      "Sustainability & ESG Reporting Verification (e.g. GRI, SASB, TCFD, CDP)",
+      "ESG Ratings & Investor Assessments",
+      "Third-Party ESG Auditing, Benchmarking & Compliance",
       "PR & Communications",
       "Stakeholder & Investor Communications",
     ],
@@ -361,9 +425,12 @@ export const providers: ProviderProfile[] = [
       "Government/Public Administration",
       "Professional and Technical Services",
       "Transportation and Warehousing",
+      "College or University",
+      "Nonprofit",
     ],
-    areasOfExpertise: [
+    specializations: [
       "Strategy & Planning",
+      "Sustainability Strategy Development",
       "Net Zero & Decarbonization Planning",
       "Implementation Planning",
       "Technical Support",
@@ -408,17 +475,20 @@ export const providers: ProviderProfile[] = [
       "Financial Services and Insurance",
       "Technology",
       "Professional and Technical Services",
-      "Consumer Goods and Retail",
+      "Consumer Packaged Goods",
+      "Retail and Apparel",
+      "Arts, Media, Entertainment",
     ],
-    areasOfExpertise: [
+    specializations: [
       "Strategy & Planning",
+      "Sustainability Strategy Development",
       "Goal Setting",
       "Implementation Planning",
       "Technical Support",
-      "Carbon Footprinting, GHG Accounting & Data Analysis",
+      "Carbon Footprint Assessment, GHG Accounting & Data Analysis",
       "ESG & Sustainable Finance",
       "PR & Communications",
-      "Sustainability & ESG Report Writing & Design",
+      "Sustainability & ESG Reporting",
     ],
     projects: [
       {

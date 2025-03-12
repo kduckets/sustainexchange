@@ -8,15 +8,15 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Header } from "@/app/components/Header"
 import { SearchResults } from "@/app/components/SearchResults"
-import { providers, areasOfExpertise } from "@/data/providers"
+import { LoadingState } from "@/app/components/LoadingState"
+import { providers, specializations, standardSectors, standardMarkets } from "@/data/providers"
 import { useState, useMemo, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
-import { LoadingState } from "@/app/components/LoadingState"
 
 type Filters = {
   marketsServed: string[]
   sectorsServed: string[]
-  areasOfExpertise: string[]
+  specializations: string[]
   firmSize: string[]
   yearsInBusiness: string[]
 }
@@ -30,7 +30,7 @@ const filterResults = (query: string, currentFilters: Filters, providersList: ty
         ${provider.website}
         ${provider.marketsServed.join(" ")}
         ${provider.sectorsServed.join(" ")}
-        ${provider.areasOfExpertise.join(" ")}
+        ${provider.specializations.join(" ")}
         ${provider.projects.map((p) => `${p.partner} ${p.description}`).join(" ")}
         ${provider.testimonials.map((t) => `${t.quote} ${t.author} ${t.title} ${t.company}`).join(" ")}
       `.toLowerCase()
@@ -44,15 +44,15 @@ const filterResults = (query: string, currentFilters: Filters, providersList: ty
     const matchesSectors =
       currentFilters.sectorsServed.length === 0 ||
       currentFilters.sectorsServed.some((sector) => provider.sectorsServed.includes(sector))
-    const matchesAreas =
-      currentFilters.areasOfExpertise.length === 0 ||
-      currentFilters.areasOfExpertise.some((area) => {
-        if (Object.keys(areasOfExpertise).includes(area)) {
-          return areasOfExpertise[area as keyof typeof areasOfExpertise].some((subArea) =>
-            provider.areasOfExpertise.includes(subArea),
+    const matchesSpecializations =
+      currentFilters.specializations.length === 0 ||
+      currentFilters.specializations.some((area) => {
+        if (Object.keys(specializations).includes(area)) {
+          return specializations[area as keyof typeof specializations].some((subArea) =>
+            provider.specializations.includes(subArea),
           )
         }
-        return provider.areasOfExpertise.includes(area)
+        return provider.specializations.includes(area)
       })
     const matchesFirmSize = currentFilters.firmSize.length === 0 || currentFilters.firmSize.includes(provider.firmSize)
     const matchesYearsInBusiness =
@@ -63,7 +63,12 @@ const filterResults = (query: string, currentFilters: Filters, providersList: ty
       })
 
     return (
-      matchesSearch && matchesMarkets && matchesSectors && matchesAreas && matchesFirmSize && matchesYearsInBusiness
+      matchesSearch &&
+      matchesMarkets &&
+      matchesSectors &&
+      matchesSpecializations &&
+      matchesFirmSize &&
+      matchesYearsInBusiness
     )
   })
 }
@@ -76,7 +81,7 @@ export default function ProviderSearch() {
   const [filters, setFilters] = useState<Filters>({
     marketsServed: [],
     sectorsServed: [],
-    areasOfExpertise: [],
+    specializations: [],
     firmSize: [],
     yearsInBusiness: [],
   })
@@ -85,10 +90,13 @@ export default function ProviderSearch() {
   const [isLoading, setIsLoading] = useState(true)
 
   const allMarkets = useMemo(() => {
-    const markets = Array.from(new Set(providers.flatMap((p) => p.marketsServed)))
-    return markets.includes("Global") ? markets : ["Global", ...markets]
+    return standardMarkets
   }, [])
-  const allSectors = useMemo(() => Array.from(new Set(providers.flatMap((p) => p.sectorsServed))), [])
+
+  const allSectors = useMemo(() => {
+    return standardSectors
+  }, [])
+
   const firmSizes = ["Small", "Mid-size", "Large"]
   const yearsInBusinessRanges = ["0-5 years", "6-10 years", "11-20 years", "21+ years"]
 
@@ -100,7 +108,7 @@ export default function ProviderSearch() {
     setFilters((prev) => {
       const newFilters = {
         ...prev,
-        areasOfExpertise: expertise ? [expertise] : prev.areasOfExpertise,
+        specializations: expertise ? [expertise] : prev.specializations,
       }
       setSearchResults(filterResults(query, newFilters, providers))
       setIsLoading(false)
@@ -143,13 +151,13 @@ export default function ProviderSearch() {
       <div className="mb-6">
         <h4 className="font-medium mb-2">Specializations</h4>
         <div className="space-y-2 max-h-[300px] overflow-y-auto">
-          {Object.entries(areasOfExpertise).map(([category, subcategories]) => (
+          {Object.entries(specializations).map(([category, subcategories]) => (
             <div key={category} className="space-y-2">
               <div className="flex items-center">
                 <Checkbox
                   id={`category-${category}`}
-                  checked={filters.areasOfExpertise.includes(category)}
-                  onCheckedChange={() => handleFilterChange("areasOfExpertise", category)}
+                  checked={filters.specializations.includes(category)}
+                  onCheckedChange={() => handleFilterChange("specializations", category)}
                 />
                 <Label htmlFor={`category-${category}`} className="ml-2 text-sm font-medium">
                   {category}
@@ -173,8 +181,8 @@ export default function ProviderSearch() {
                     <div key={subcategory} className="flex items-center">
                       <Checkbox
                         id={`subcategory-${subcategory}`}
-                        checked={filters.areasOfExpertise.includes(subcategory)}
-                        onCheckedChange={() => handleFilterChange("areasOfExpertise", subcategory)}
+                        checked={filters.specializations.includes(subcategory)}
+                        onCheckedChange={() => handleFilterChange("specializations", subcategory)}
                       />
                       <Label htmlFor={`subcategory-${subcategory}`} className="ml-2 text-sm">
                         {subcategory}
@@ -192,7 +200,6 @@ export default function ProviderSearch() {
         items={allSectors}
         selectedItems={filters.sectorsServed}
         onChange={(value) => handleFilterChange("sectorsServed", value)}
-        maxHeight=""
       />
       <FilterSection
         title="Firm Size"
@@ -214,7 +221,7 @@ export default function ProviderSearch() {
     const clearedFilters: Filters = {
       marketsServed: [],
       sectorsServed: [],
-      areasOfExpertise: [],
+      specializations: [],
       firmSize: [],
       yearsInBusiness: [],
     }
@@ -226,8 +233,8 @@ export default function ProviderSearch() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
-      <main className="container mx-auto px-4 py-4 md:py-16">
-        <h2 className="text-3xl md:text-5xl font-semibold max-w-4xl mx-auto mb-12 text-center">
+      <main className="container mx-auto px-4 py-16">
+        <h2 className="text-4xl md:text-5xl font-bold max-w-4xl mx-auto mb-12 text-center">
           Search Sustainability Providers
         </h2>
 

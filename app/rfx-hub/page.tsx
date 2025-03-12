@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Header } from "@/app/components/Header"
-import { areasOfExpertise, providers } from "@/data/providers"
+import { specializations, standardSectors } from "@/data/providers"
 
 const rfxData = [
   {
@@ -33,31 +33,27 @@ const rfxData = [
   },
 ]
 
-const projectTypes = Object.keys(areasOfExpertise)
-const sectors = Array.from(new Set(providers.flatMap((provider) => provider.sectorsServed)))
+const projectTypes = Object.keys(specializations)
+const sectors = standardSectors
 
 export default function RFXHub() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
-      <main className="container mx-auto px-4 py-4 md:py-16">
-        <h1 className="text-3xl md:text-5xl font-semibold text-center mb-6">RFP Hub</h1>
-        <p className="text-lg font-thin text-center mb-2">Are you a sustainability consultant or service provider? Find your next opportunity!</p>
-        <p className="text-lg font-thin text-center mb-12">
-        Do you need some support with a sustainability project or program? List your RFP/I/Q.
-        </p>
+      <main className="container mx-auto px-4 py-16">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">RFX Hub</h1>
+        <p className="text-xl text-center mb-12">Post and search for sustainability RFPs/RFIs/RFQs here today</p>
 
         <div className="bg-gray-100 p-6 rounded-lg mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-
-          <Select>
+            <Select>
               <SelectTrigger>
-                <SelectValue placeholder="Sector" />
+                <SelectValue placeholder="Project Type" />
               </SelectTrigger>
               <SelectContent>
-              {sectors.map((sector) => (
-                  <SelectItem key={sector} value={sector}>
-                    {sector}
+                {projectTypes.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {type}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -65,12 +61,12 @@ export default function RFXHub() {
 
             <Select>
               <SelectTrigger>
-                <SelectValue placeholder="Project Type" />
+                <SelectValue placeholder="Sector" />
               </SelectTrigger>
               <SelectContent>
-              {projectTypes.map((type) => (
-                  <SelectItem key={type} value={type}>
-                    {type}
+                {sectors.map((sector) => (
+                  <SelectItem key={sector} value={sector}>
+                    {sector}
                   </SelectItem>
                 ))}
               </SelectContent>

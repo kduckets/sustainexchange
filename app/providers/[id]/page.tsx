@@ -22,7 +22,7 @@ export default function ProviderProfile({ params }: { params: { id: string } }) 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Header />
-      <main className="container mx-auto px-4 py-4 md:py-16">
+      <main className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-8 gap-4">
             <div className="flex flex-col md:flex-row gap-4 md:gap-8">
@@ -63,7 +63,7 @@ export default function ProviderProfile({ params }: { params: { id: string } }) 
             </div>
             <div>
               <h2 className="font-semibold underline mb-2">Specializations:</h2>
-              <p>{provider.areasOfExpertise.join(", ")}</p>
+              <p>{provider.specializations.join(", ")}</p>
             </div>
           </div>
 
