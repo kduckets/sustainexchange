@@ -345,5 +345,100 @@ export const providers: ProviderProfile[] = [
     firmSize: "Mid-size",
     yearsInBusiness: new Date().getFullYear() - 1992,
   },
+  {
+    id: "cadmus",
+    name: "Cadmus Group",
+    logo: "/placeholder.svg?height=80&width=200",
+    location: "Waltham, MA, USA",
+    established: "1983",
+    size: "Mid-size firm",
+    description:
+      "Cadmus is a strategic and technical consultancy compelled to help solve the world's most challenging problems. Together, we are strengthening society and the natural world. Our team works across energy, climate, safety, security, and resilience domains.",
+    website: "www.cadmusgroup.com",
+    marketsServed: ["North America", "Europe"],
+    sectorsServed: [
+      "Energy or Utility",
+      "Government/Public Administration",
+      "Professional and Technical Services",
+      "Transportation and Warehousing",
+    ],
+    areasOfExpertise: [
+      "Strategy & Planning",
+      "Net Zero & Decarbonization Planning",
+      "Implementation Planning",
+      "Technical Support",
+      "Climate & Environmental Risk Assessment",
+      "Climate Adaptation",
+      "Renewable Energy & Energy Services",
+      "PR & Communications",
+      "Stakeholder & Investor Communications",
+    ],
+    projects: [
+      {
+        partner: "U.S. Environmental Protection Agency",
+        description:
+          "Provided technical support for the development of climate resilience strategies and greenhouse gas reduction programs.",
+        videoUrl: "https://www.youtube.com/watch?v=example7",
+      },
+    ],
+    testimonials: [
+      {
+        quote:
+          "Cadmus has been an exceptional partner in helping us navigate complex environmental challenges and develop effective sustainability strategies.",
+        author: "David Wilson",
+        title: "Environmental Director",
+        company: "State Energy Office",
+      },
+    ],
+    firmSize: "Mid-size",
+    yearsInBusiness: new Date().getFullYear() - 1983,
+  },
+  {
+    id: "howerimpact",
+    name: "Hower Impact",
+    logo: "/placeholder.svg?height=80&width=200",
+    location: "New York, NY, USA",
+    established: "2015",
+    size: "Small firm",
+    description:
+      "Hower Impact is a boutique sustainability consultancy that helps organizations develop and implement effective sustainability strategies. We specialize in ESG reporting, carbon footprinting, and sustainable business transformation.",
+    website: "www.howerimpact.com",
+    marketsServed: ["North America", "Europe"],
+    sectorsServed: [
+      "Financial Services and Insurance",
+      "Technology",
+      "Professional and Technical Services",
+      "Consumer Goods and Retail",
+    ],
+    areasOfExpertise: [
+      "Strategy & Planning",
+      "Goal Setting",
+      "Implementation Planning",
+      "Technical Support",
+      "Carbon Footprinting, GHG Accounting & Data Analysis",
+      "ESG & Sustainable Finance",
+      "PR & Communications",
+      "Sustainability & ESG Report Writing & Design",
+    ],
+    projects: [
+      {
+        partner: "Tech Startup",
+        description:
+          "Developed a comprehensive sustainability strategy and ESG reporting framework for a growing technology company.",
+        videoUrl: "https://www.youtube.com/watch?v=example8",
+      },
+    ],
+    testimonials: [
+      {
+        quote:
+          "Hower Impact provided us with practical, actionable sustainability guidance that was tailored to our specific needs and growth stage.",
+        author: "Jennifer Chen",
+        title: "Chief Operating Officer",
+        company: "GreenTech Solutions",
+      },
+    ],
+    firmSize: "Small",
+    yearsInBusiness: new Date().getFullYear() - 2015,
+  },
 ]
 
