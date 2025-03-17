@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import { Header } from "@/app/components/Header"
 import { useState } from "react"
 import type React from "react"
+import Image from "next/image"
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -21,7 +22,17 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+<div className="min-h-screen relative">
+      <div className="absolute inset-0 w-full h-full z-0">
+        <Image
+          src="/clouds.jpg"
+          alt="Serene sky with clouds"
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
+      <div className="relative z-10">
       <Header />
       <main className="container mx-auto px-4 py-4 md:py-16 text-center">
         <h2 className="text-3xl md:text-5xl font-semibold max-w-4xl mx-auto mb-12">
@@ -87,6 +98,7 @@ export default function Home() {
           <p className="text-lg">Post your sustainability or ESG project to attract top experts and service providers</p>
         </div>
       </main>
+    </div>
     </div>
   )
 }
