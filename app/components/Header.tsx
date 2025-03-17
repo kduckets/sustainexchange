@@ -23,9 +23,6 @@ export function Header() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="text-gray-600">
-              <Search className="h-5 w-5" />
-            </Button>
             <Link href="/contact">
               <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
                 Contact
