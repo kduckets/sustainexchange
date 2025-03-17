@@ -135,7 +135,7 @@ export default function Home() {
         <div className="container-wide">
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="md:w-1/2">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
+              <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-gray-800">
                 Post your sustainability RFP, RFI, or RFQ
               </h2>
               <p className="text-lg text-gray-700 mb-8">
@@ -151,22 +151,22 @@ export default function Home() {
             <div className="md:w-1/2 grid grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-lg shadow-sm card-hover">
                 <BarChart3 className="text-primary w-10 h-10 mb-4" />
-                <h3 className="font-bold text-xl mb-2">ESG Reporting</h3>
+                <h3 className="font-semibold text-xl mb-2">ESG Reporting</h3>
                 <p className="text-gray-600">Find experts to help with sustainability reporting and disclosures</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm card-hover">
                 <Globe className="text-primary w-10 h-10 mb-4" />
-                <h3 className="font-bold text-xl mb-2">Net Zero Planning</h3>
+                <h3 className="font-semibold text-xl mb-2">Net Zero Planning</h3>
                 <p className="text-gray-600">Connect with specialists in carbon reduction strategies</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm card-hover">
                 <Leaf className="text-primary w-10 h-10 mb-4" />
-                <h3 className="font-bold text-xl mb-2">Biodiversity</h3>
+                <h3 className="font-semibold text-xl mb-2">Biodiversity</h3>
                 <p className="text-gray-600">Engage experts in nature-positive business approaches</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm card-hover">
                 <FileText className="text-primary w-10 h-10 mb-4" />
-                <h3 className="font-bold text-xl mb-2">Supply Chain</h3>
+                <h3 className="font-semibold text-xl mb-2">Supply Chain</h3>
                 <p className="text-gray-600">Find specialists in sustainable supply chain management</p>
               </div>
             </div>
@@ -179,15 +179,15 @@ export default function Home() {
         <div className="container-wide">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
-              <p className="text-5xl font-bold text-primary mb-2">25+</p>
+              <p className="text-5xl font-semibold text-primary mb-2">25+</p>
               <p className="text-xl text-gray-600">Sustainability specializations</p>
             </div>
             <div>
-              <p className="text-5xl font-bold text-primary mb-2">100+</p>
+              <p className="text-5xl font-semibold text-primary mb-2">100+</p>
               <p className="text-xl text-gray-600">Vetted service providers</p>
             </div>
             <div>
-              <p className="text-5xl font-bold text-primary mb-2">500+</p>
+              <p className="text-5xl font-semibold text-primary mb-2">500+</p>
               <p className="text-xl text-gray-600">Successful projects</p>
             </div>
           </div>
@@ -218,7 +218,7 @@ function ServiceCard({
     <button onClick={handleClick} className="block w-full text-left">
       <div className="flex flex-col h-full p-8 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:border-primary/20 transition-all">
         <div className="text-primary mb-4">{icon}</div>
-        <h3 className="font-bold text-xl mb-3">{title}</h3>
+        <h3 className="font-semibold text-xl mb-3">{title}</h3>
         <p className="text-gray-600 mb-6 flex-grow">{description}</p>
         <div className="flex items-center text-primary font-medium">
           Explore <ArrowRight className="ml-2 h-4 w-4" />
