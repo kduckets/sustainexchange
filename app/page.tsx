@@ -142,6 +142,21 @@ export default function Home() {
                   expertise="PR & Communications"
                 />
               </div>
+              <div className="max-w-2xl mx-auto">
+                <div className="bg-white/90 backdrop-blur-sm p-6 rounded-lg shadow-md border-2 border-primary">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="text-center sm:text-left">
+                      <h3 className="text-xl font-bold text-gray-800 mb-1">Have a sustainability project?</h3>
+                      <p className="text-gray-600">Post your RFP and connect with qualified experts</p>
+                    </div>
+                    <Link href="/rfx-hub">
+                      <Button className="bg-primary text-white hover:bg-primary/90 px-6 py-3 text-lg whitespace-nowrap">
+                        Post an RFP <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
