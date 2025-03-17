@@ -12,6 +12,7 @@ import { LoadingState } from "@/app/components/LoadingState"
 import { providers, specializations, standardSectors, standardMarkets } from "@/data/providers"
 import { useState, useMemo, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
+import Image from "next/image"
 
 type Filters = {
   marketsServed: string[]
@@ -231,63 +232,74 @@ export default function ProviderSearch() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
-      <Header />
-      <main className="container mx-auto px-4 py-4 md:py-8">
-        <h2 className="text-3xl md:text-4xl max-w-4xl mx-auto mb-12 text-center">
-          Search Sustainability Providers
-        </h2>
+    <div className="min-h-screen relative">
+      <div className="absolute inset-0 w-full h-full z-0">
+        <Image
+          src="/clouds.jpg"
+          alt="Serene sky with clouds"
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
+      <div className="relative z-10">
+        <Header />
+        <main className="container mx-auto px-4 py-16">
+          <h2 className="text-4xl md:text-5xl font-bold max-w-4xl mx-auto mb-12 text-center text-gray-800">
+            Search Sustainability Providers
+          </h2>
 
-        <div className="relative max-w-2xl mx-auto mb-8">
-          <Input
-            type="text"
-            placeholder="What do you need help with?"
-            className="w-full h-12 pl-4 pr-12 text-lg rounded-lg shadow-sm"
-            value={searchQuery}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-          <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
-        </div>
+          <div className="relative max-w-2xl mx-auto mb-8">
+            <Input
+              type="text"
+              placeholder="What do you need help with?"
+              className="w-full h-12 pl-4 pr-12 text-lg rounded-lg shadow-sm"
+              value={searchQuery}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+            <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
+          </div>
 
-        <div className="md:hidden mb-8">
-          <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" className="w-full">
-                <Filter className="mr-2 h-4 w-4" /> Filters
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-full sm:w-[400px] p-0">
-              <div className="h-full flex flex-col">
-                <SheetHeader className="p-6 pb-0">
-                  <SheetTitle>Filters</SheetTitle>
-                </SheetHeader>
-                <div className="flex-1 overflow-y-auto p-6">
-                  <FiltersContent />
+          <div className="md:hidden mb-8">
+            <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+              <SheetTrigger asChild>
+                <Button variant="outline" className="w-full bg-white">
+                  <Filter className="mr-2 h-4 w-4" /> Filters
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-full sm:w-[400px] p-0">
+                <div className="h-full flex flex-col">
+                  <SheetHeader className="p-6 pb-0">
+                    <SheetTitle>Filters</SheetTitle>
+                  </SheetHeader>
+                  <div className="flex-1 overflow-y-auto p-6">
+                    <FiltersContent />
+                  </div>
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+              </SheetContent>
+            </Sheet>
+          </div>
 
-        <div className="grid md:grid-cols-[250px,1fr] gap-8">
-          <div className="hidden md:block bg-white p-6 rounded-lg shadow-sm">
-            <h3 className="font-semibold mb-4">Filters</h3>
-            <FiltersContent />
+          <div className="grid md:grid-cols-[250px,1fr] gap-8">
+            <div className="hidden md:block bg-white/90 backdrop-blur-sm p-6 rounded-lg shadow-sm">
+              <h3 className="font-semibold mb-4">Filters</h3>
+              <FiltersContent />
+            </div>
+            <div className="bg-white/90 backdrop-blur-sm p-6 rounded-lg shadow-sm">
+              {isLoading ? (
+                <LoadingState />
+              ) : (
+                <SearchResults
+                  results={searchResults}
+                  searchQuery={searchQuery}
+                  activeFilters={filters}
+                  onClearAll={clearAll}
+                />
+              )}
+            </div>
           </div>
-          <div>
-            {isLoading ? (
-              <LoadingState />
-            ) : (
-              <SearchResults
-                results={searchResults}
-                searchQuery={searchQuery}
-                activeFilters={filters}
-                onClearAll={clearAll}
-              />
-            )}
-          </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   )
 }
