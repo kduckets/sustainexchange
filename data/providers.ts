@@ -137,7 +137,7 @@ export const providers: ProviderProfile[] = [
         partner: "Etsy",
         description:
           "Helped Etsy become the first global ecommerce company to offset 100% of carbon emissions from shipping.",
-        videoUrl: "https://www.youtube.com/watch?v=example1",
+        videoUrl: "https://www.youtube.com/watch?v=ipVxxxqwBQw",
       },
     ],
     testimonials: [
@@ -189,7 +189,7 @@ export const providers: ProviderProfile[] = [
         partner: "Schneider Electric",
         description:
           "Collaborated on developing and implementing a comprehensive sustainability strategy, focusing on energy efficiency and carbon reduction across global operations.",
-        videoUrl: "https://www.youtube.com/watch?v=example2",
+        videoUrl: "https://www.youtube.com/watch?v=0XTBYMfZyrM",
       },
     ],
     testimonials: [
@@ -244,7 +244,7 @@ export const providers: ProviderProfile[] = [
         partner: "Major Oil Company",
         description:
           "Conducted a global carbon footprint assessment and developed a roadmap for achieving net-zero emissions by 2050.",
-        videoUrl: "https://www.youtube.com/watch?v=example3",
+        videoUrl: "https://www.youtube.com/watch?v=8moubsQGgKk",
       },
     ],
     testimonials: [
@@ -296,7 +296,7 @@ export const providers: ProviderProfile[] = [
         partner: "City of Toronto",
         description:
           "Developed a comprehensive climate action strategy to help the city achieve its goal of becoming net-zero by 2040.",
-        videoUrl: "https://www.youtube.com/watch?v=example4",
+        videoUrl: "https://www.youtube.com/watch?v=gTamnlXbgqc",
       },
     ],
     testimonials: [
@@ -344,7 +344,7 @@ export const providers: ProviderProfile[] = [
         partner: "Ørsted",
         description:
           "Provided technical due diligence and advisory services for the development of the world's largest offshore wind farm.",
-        videoUrl: "https://www.youtube.com/watch?v=example5",
+        videoUrl: "https://www.youtube.com/watch?v=HYuFgPxJHxE",
       },
     ],
     testimonials: [
@@ -394,7 +394,7 @@ export const providers: ProviderProfile[] = [
         partner: "Major European Bank",
         description:
           "Developed a comprehensive ESG integration framework for the bank's investment processes, covering over €500 billion in assets under management.",
-        videoUrl: "https://www.youtube.com/watch?v=example6",
+        videoUrl: "https://www.youtube.com/watch?v=kAGGvx4zb-I",
       },
     ],
     testimonials: [
@@ -445,7 +445,7 @@ export const providers: ProviderProfile[] = [
         partner: "U.S. Environmental Protection Agency",
         description:
           "Provided technical support for the development of climate resilience strategies and greenhouse gas reduction programs.",
-        videoUrl: "https://www.youtube.com/watch?v=example7",
+        videoUrl: "https://www.youtube.com/watch?v=jx1mB5FSguE",
       },
     ],
     testimonials: [
@@ -495,7 +495,7 @@ export const providers: ProviderProfile[] = [
         partner: "Tech Startup",
         description:
           "Developed a comprehensive sustainability strategy and ESG reporting framework for a growing technology company.",
-        videoUrl: "https://www.youtube.com/watch?v=example8",
+        videoUrl: "https://www.youtube.com/watch?v=o08ykAqLOxk",
       },
     ],
     testimonials: [
