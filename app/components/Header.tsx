@@ -16,7 +16,7 @@ export function Header() {
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-gray-800">SustainExchange</h1>
-                  <p className="text-xs text-gray-500">Connecting sustainability experts & seekers</p>
+                  <p className="text-xs text-gray-500">Real sustainability experts. Real sustainability solutions.</p>
                 </div>
               </div>
             </Link>
