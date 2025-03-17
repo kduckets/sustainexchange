@@ -142,7 +142,7 @@ export default function Home() {
                 />
               </div>
               <div className="max-w-2xl mx-auto">
-                <div className="bg-white/90 backdrop-blur-sm p-6 rounded-lg shadow-md border-2 border-primary">
+                <div className="backdrop-blur-sm p-6 rounded-lg shadow-md border-2 border-primary">
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="text-center sm:text-left">
                       <h3 className="text-xl font-bold text-gray-800 mb-1">Have a sustainability project?</h3>
