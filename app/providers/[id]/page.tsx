@@ -77,45 +77,51 @@ export default function ProviderProfile({ params }: { params: { id: string } }) 
               </div>
             </div>
 
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-center mb-8">Project Showcase</h2>
-              <Carousel
-                items={provider.projects.map((project, index) => (
-                  <div key={index} className="space-y-4">
-                    <p>
-                      <strong>Partner:</strong> {project.partner}
-                    </p>
-                    <p>
-                      <strong>Description:</strong> {project.description}
-                    </p>
-                    {project.videoUrl && (
-                      <div className="aspect-video">
-                        {getYouTubeVideoId(project.videoUrl) ? (
-                          <YouTubeEmbed videoId={getYouTubeVideoId(project.videoUrl)!} />
-                        ) : (
-                          <p className="text-red-500">Invalid YouTube URL</p>
+            {provider.projects.some((project) => project.videoUrl) && (
+              <section className="mb-16">
+                <h2 className="text-2xl font-bold text-center mb-8">Project Showcase</h2>
+                <Carousel
+                  items={provider.projects
+                    .filter((project) => project.videoUrl)
+                    .map((project, index) => (
+                      <div key={index} className="space-y-4">
+                        <p>
+                          <strong>Partner:</strong> {project.partner}
+                        </p>
+                        <p>
+                          <strong>Description:</strong> {project.description}
+                        </p>
+                        {project.videoUrl && (
+                          <div className="aspect-video">
+                            {getYouTubeVideoId(project.videoUrl) ? (
+                              <YouTubeEmbed videoId={getYouTubeVideoId(project.videoUrl)!} />
+                            ) : (
+                              <p className="text-red-500">Invalid YouTube URL</p>
+                            )}
+                          </div>
                         )}
                       </div>
-                    )}
-                  </div>
-                ))}
-              />
-            </section>
+                    ))}
+                />
+              </section>
+            )}
 
-            <section>
-              <h2 className="text-2xl font-bold text-center mb-8">Testimonials</h2>
-              <Carousel
-                items={provider.testimonials.map((testimonial, index) => (
-                  <div key={index} className="bg-white p-8 rounded-lg shadow-lg">
-                    <div className="text-6xl text-orange-400 leading-none mb-4">"</div>
-                    <blockquote className="text-lg italic mb-4">{testimonial.quote}</blockquote>
-                    <cite className="block text-sm not-italic">
-                      — {testimonial.author}, {testimonial.title}, {testimonial.company}
-                    </cite>
-                  </div>
-                ))}
-              />
-            </section>
+            {provider.testimonials.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold text-center mb-8">Testimonials</h2>
+                <Carousel
+                  items={provider.testimonials.map((testimonial, index) => (
+                    <div key={index} className="bg-white p-8 rounded-lg shadow-lg">
+                      <div className="text-6xl text-orange-400 leading-none mb-4">"</div>
+                      <blockquote className="text-lg italic mb-4">{testimonial.quote}</blockquote>
+                      <cite className="block text-sm not-italic">
+                        — {testimonial.author}, {testimonial.title}, {testimonial.company}
+                      </cite>
+                    </div>
+                  ))}
+                />
+              </section>
+            )}
           </div>
         </main>
       </div>
