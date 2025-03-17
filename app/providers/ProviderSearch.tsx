@@ -232,60 +232,76 @@ export default function ProviderSearch() {
   }
 
   return (
-    <div className="min-h-screen relative">
-      <div className="absolute inset-0 w-full h-full z-0">
-        <Image
-          src="/clouds.jpg"
-          alt="Serene sky with clouds"
-          fill
-          priority
-          className="object-cover"
-        />
-      </div>
-      <div className="relative z-10">
-        <Header />
-        <main className="container mx-auto px-4 py-16">
-          <h2 className="text-4xl md:text-5xl font-bold max-w-4xl mx-auto mb-12 text-center text-gray-800">
-            Search Sustainability Providers
-          </h2>
+    <div className="min-h-screen bg-gray-50">
+      <Header />
 
-          <div className="relative max-w-2xl mx-auto mb-8">
-            <Input
-              type="text"
-              placeholder="What do you need help with?"
-              className="w-full h-12 pl-4 pr-12 text-lg rounded-lg shadow-sm"
-              value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
-            />
-            <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
-          </div>
+      {/* Hero Section */}
+      <div className="relative">
+        <div className="absolute inset-0 w-full h-64 z-0">
+          <Image
+            src="/clouds.jpg"
+            alt="Serene sky with clouds"
+            fill
+            priority
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/10"></div>
+        </div>
 
-          <div className="md:hidden mb-8">
-            <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-              <SheetTrigger asChild>
-                <Button variant="outline" className="w-full bg-white">
-                  <Filter className="mr-2 h-4 w-4" /> Filters
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-full sm:w-[400px] p-0">
-                <div className="h-full flex flex-col">
-                  <SheetHeader className="p-6 pb-0">
-                    <SheetTitle>Filters</SheetTitle>
-                  </SheetHeader>
-                  <div className="flex-1 overflow-y-auto p-6">
-                    <FiltersContent />
-                  </div>
+        <div className="relative z-10 pt-16 pb-20">
+          <div className="container-wide">
+            <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-6">
+              Find Sustainability Experts
+            </h1>
+
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-white p-4 rounded-lg shadow-md">
+                <div className="relative">
+                  <Input
+                    type="text"
+                    placeholder="What sustainability challenge can we help with?"
+                    className="w-full h-12 pl-4 pr-12 text-lg rounded-md"
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                  />
+                  <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 </div>
-              </SheetContent>
-            </Sheet>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
 
-          <div className="grid md:grid-cols-[250px,1fr] gap-8">
-            <div className="hidden md:block bg-white/90 backdrop-blur-sm p-6 rounded-lg shadow-sm">
-              <h3 className="font-semibold mb-4">Filters</h3>
+      <div className="container-wide py-8">
+        <div className="md:hidden mb-8">
+          <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+            <SheetTrigger asChild>
+              <Button variant="outline" className="w-full bg-white">
+                <Filter className="mr-2 h-4 w-4" /> Filters
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-full sm:w-[400px] p-0">
+              <div className="h-full flex flex-col">
+                <SheetHeader className="p-6 pb-0">
+                  <SheetTitle>Filters</SheetTitle>
+                </SheetHeader>
+                <div className="flex-1 overflow-y-auto p-6">
+                  <FiltersContent />
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        <div className="grid md:grid-cols-[280px,1fr] gap-8">
+          <div className="hidden md:block">
+            <div className="bg-white p-6 rounded-lg shadow-sm sticky top-8">
+              <h3 className="font-semibold text-lg mb-6 pb-2 border-b">Filters</h3>
               <FiltersContent />
             </div>
-            <div className="bg-white/90 backdrop-blur-sm p-6 rounded-lg shadow-sm">
+          </div>
+          <div>
+            <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
               {isLoading ? (
                 <LoadingState />
               ) : (
@@ -298,7 +314,7 @@ export default function ProviderSearch() {
               )}
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   )
@@ -319,7 +335,7 @@ function FilterSection({
 }) {
   return (
     <div className="mb-6">
-      <h4 className="font-medium mb-2">{title}</h4>
+      <h4 className="font-medium mb-3 text-gray-700">{title}</h4>
       <div className={`space-y-2 overflow-y-auto`} style={{ maxHeight }}>
         {items.map((item) => (
           <div key={item} className="flex items-center">
@@ -327,8 +343,9 @@ function FilterSection({
               id={`${title}-${item}`}
               checked={selectedItems.includes(item)}
               onCheckedChange={() => onChange(item)}
+              className="text-primary border-gray-300"
             />
-            <Label htmlFor={`${title}-${item}`} className="ml-2 text-sm">
+            <Label htmlFor={`${title}-${item}`} className="ml-2 text-sm text-gray-600 cursor-pointer">
               {item}
             </Label>
           </div>
