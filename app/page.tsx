@@ -119,7 +119,6 @@ export default function Home() {
                   </Button>
                 </Link>
               </form>
-
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-2xl mx-auto">
                 <SpecializationButton
                   icon={<ClipboardCheck className="w-5 h-5 mr-2" />}
