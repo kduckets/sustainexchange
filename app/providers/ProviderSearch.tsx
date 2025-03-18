@@ -259,7 +259,7 @@ export default function ProviderSearch() {
             <div className="max-w-2xl mx-auto">
               <div className="bg-white p-4 rounded-lg shadow-md">
                 <SearchTypeahead
-                  placeholder="What sustainability challenge can we help with?"
+                  placeholder="How can we help?"
                   suggestions={searchSuggestions}
                   onSearch={handleSearch}
                   initialValue={searchQuery}

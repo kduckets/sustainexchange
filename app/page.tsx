@@ -67,7 +67,7 @@ export default function Home() {
               {/* Isolated search container with high z-index */}
               <div className="max-w-2xl mx-auto mb-8" style={{ position: "relative", zIndex: 1000 }}>
                 <SearchTypeahead
-                  placeholder="What sustainability challenge can we help with?"
+                  placeholder="How can we help?"
                   suggestions={suggestions}
                   onSearch={handleSearch}
                   buttonText="Find Experts"
