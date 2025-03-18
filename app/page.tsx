@@ -1,36 +1,46 @@
 "use client"
 
+import React from "react"
+
 import { ClipboardCheck, Wrench, Calculator, FileText, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Header } from "@/app/components/Header"
-import type React from "react"
 import Image from "next/image"
 import { SearchTypeahead } from "@/app/components/SearchTypeahead"
 import { useSearchSuggestions } from "@/app/components/SearchSuggestions"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 
 export default function Home() {
   const router = useRouter()
   const [suggestions, setSuggestions] = useState<string[]>([])
   const searchSuggestionsFromHook = useSearchSuggestions()
 
-  // Ensure suggestions are loaded
+  // Ensure suggestions are loaded - use useCallback to prevent infinite loops
   useEffect(() => {
-    console.log("Home page suggestions:", searchSuggestionsFromHook.length)
-    setSuggestions(searchSuggestionsFromHook)
-  }, [searchSuggestionsFromHook])
-
-  const handleSearch = (query: string) => {
-    // Navigate to providers page with query parameter if query exists
-    if (query) {
-      router.push(`/providers?q=${encodeURIComponent(query)}`)
-    } else {
-      // Navigate to providers page without query parameter if no query
-      router.push("/providers")
+    // Only update if the suggestions have changed and are not empty
+    if (
+      searchSuggestionsFromHook.length > 0 &&
+      JSON.stringify(searchSuggestionsFromHook) !== JSON.stringify(suggestions)
+    ) {
+      setSuggestions(searchSuggestionsFromHook)
     }
-  }
+  }, [searchSuggestionsFromHook, suggestions])
+
+  // Use useCallback to prevent recreating this function on every render
+  const handleSearch = useCallback(
+    (query: string) => {
+      // Navigate to providers page with query parameter if query exists
+      if (query) {
+        router.push(`/providers?q=${encodeURIComponent(query)}`)
+      } else {
+        // Navigate to providers page without query parameter if no query
+        router.push("/providers")
+      }
+    },
+    [router],
+  )
 
   return (
     <div className="min-h-screen">
@@ -167,7 +177,8 @@ export default function Home() {
   )
 }
 
-function ServiceCard({
+// Memoize these components to prevent unnecessary re-renders
+const ServiceCard = React.memo(function ServiceCard({
   icon,
   title,
   description,
@@ -180,9 +191,9 @@ function ServiceCard({
 }) {
   const router = useRouter()
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     router.push(`/providers?expertise=${encodeURIComponent(expertise)}`)
-  }
+  }, [router, expertise])
 
   return (
     <button onClick={handleClick} className="block w-full text-left">
@@ -196,9 +207,9 @@ function ServiceCard({
       </div>
     </button>
   )
-}
+})
 
-function SpecializationButton({
+const SpecializationButton = React.memo(function SpecializationButton({
   icon,
   label,
   expertise,
@@ -209,9 +220,9 @@ function SpecializationButton({
 }) {
   const router = useRouter()
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     router.push(`/providers?expertise=${encodeURIComponent(expertise)}`)
-  }
+  }, [router, expertise])
 
   return (
     <button
@@ -222,5 +233,5 @@ function SpecializationButton({
       <span>{label}</span>
     </button>
   )
-}
+})
 

@@ -37,7 +37,7 @@ export function SearchTypeahead({
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0)
   const searchRef = useRef<HTMLDivElement>(null)
 
-  // Process suggestions to split entries with commas or "&"
+  // Process suggestions to split entries with commas or "&" - only when suggestions change
   const processedSuggestions = useMemo(() => {
     const result: string[] = []
 
@@ -63,7 +63,7 @@ export function SearchTypeahead({
     return Array.from(new Set(result)).sort()
   }, [suggestions])
 
-  // Filter suggestions based on input
+  // Filter suggestions based on input - separate useEffect to avoid infinite loops
   useEffect(() => {
     const query = searchQuery.toLowerCase().trim()
 
