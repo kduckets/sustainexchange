@@ -53,7 +53,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/10"></div>
         </div>
 
-        <div className="relative z-10 pt-20 pb-24">
+        <div className="relative z-10 pt-10 md:pt-20 pb-24">
           <div className="container-wide">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 leading-tight">
