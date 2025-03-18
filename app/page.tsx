@@ -165,14 +165,6 @@ export default function Home() {
               </Button>
             </Link>
           </div>
-
-          <div className="text-center">
-            <Link href="/rfx-hub">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                View All RFPs <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
     </div>
