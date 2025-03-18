@@ -250,9 +250,9 @@ export default function ProviderSearch() {
           <div className="absolute inset-0 bg-black/10"></div>
         </div>
 
-        <div className="relative z-10 pt-16 pb-20">
+        <div className="relative z-10 pt-10 md:pt-16 pb-20">
           <div className="container-wide">
-            <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-6">
+            <h1 className="text-3xl md:text-4xl font-semibold text-center text-gray-900 mb-6">
               Find Sustainability Experts
             </h1>
 
