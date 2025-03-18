@@ -1,7 +1,6 @@
 "use client"
 
-import { Search, Filter, ChevronDown, ChevronUp } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { Filter, ChevronDown, ChevronUp } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -13,6 +12,8 @@ import { providers, specializations, standardSectors, standardMarkets } from "@/
 import { useState, useMemo, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import Image from "next/image"
+import { SearchTypeahead } from "@/app/components/SearchTypeahead"
+import { useSearchSuggestions } from "@/app/components/SearchSuggestions"
 
 type Filters = {
   marketsServed: string[]
@@ -89,6 +90,7 @@ export default function ProviderSearch() {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [expandedCategories, setExpandedCategories] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const searchSuggestions = useSearchSuggestions()
 
   const allMarkets = useMemo(() => {
     return standardMarkets
@@ -256,16 +258,13 @@ export default function ProviderSearch() {
 
             <div className="max-w-2xl mx-auto">
               <div className="bg-white p-4 rounded-lg shadow-md">
-                <div className="relative">
-                  <Input
-                    type="text"
-                    placeholder="What sustainability challenge can we help with?"
-                    className="w-full h-12 pl-4 pr-12 text-lg rounded-md"
-                    value={searchQuery}
-                    onChange={(e) => handleSearch(e.target.value)}
-                  />
-                  <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                </div>
+                <SearchTypeahead
+                  placeholder="What sustainability challenge can we help with?"
+                  suggestions={searchSuggestions}
+                  onSearch={handleSearch}
+                  initialValue={searchQuery}
+                  showButton={false}
+                />
               </div>
             </div>
           </div>

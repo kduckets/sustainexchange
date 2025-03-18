@@ -1,25 +1,21 @@
 "use client"
 
-import { ClipboardCheck, Wrench, Calculator, FileText, Search, ArrowRight, Calendar, Building, MapPin } from 'lucide-react'
+import { ClipboardCheck, Wrench, Calculator, FileText, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Header } from "@/app/components/Header"
-import { useState } from "react"
 import type React from "react"
 import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
+import { SearchTypeahead } from "@/app/components/SearchTypeahead"
+import { useSearchSuggestions } from "@/app/components/SearchSuggestions"
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("")
   const router = useRouter()
+  const searchSuggestions = useSearchSuggestions()
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (searchQuery.trim()) {
-      router.push(`/providers?q=${encodeURIComponent(searchQuery.trim())}`)
-    }
+  const handleSearch = (query: string) => {
+    router.push(`/providers?q=${encodeURIComponent(query)}`)
   }
 
   return (
@@ -44,31 +40,15 @@ export default function Home() {
                 governance goals.
               </p>
 
-              <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4 mb-8 max-w-2xl mx-auto">
-                <div className="relative flex-grow">
-                  <Input
-                    type="text"
-                    placeholder="What sustainability challenge can we help with?"
-                    className="w-full h-14 pl-5 pr-12 text-lg rounded-md shadow-sm border-gray-300"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                  <button
-                    type="submit"
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary"
-                  >
-                    <Search className="w-6 h-6" />
-                  </button>
-                </div>
-                <Link href="/providers">
-                  <Button
-                    type="submit"
-                    className="h-14 px-8 bg-primary text-white hover:bg-primary/90 w-full sm:w-auto"
-                  >
-                    Find Experts
-                  </Button>
-                </Link>
-              </form>
+              <div className="max-w-2xl mx-auto mb-8">
+                <SearchTypeahead
+                  placeholder="What sustainability challenge can we help with?"
+                  suggestions={searchSuggestions}
+                  onSearch={handleSearch}
+                  buttonText="Find Experts"
+                />
+              </div>
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-2xl mx-auto">
                 <SpecializationButton
                   icon={<ClipboardCheck className="w-5 h-5 mr-2" />}
