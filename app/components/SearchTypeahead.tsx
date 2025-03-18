@@ -26,7 +26,7 @@ export function SearchTypeahead({
   initialValue = "",
   buttonText = "Search",
   buttonClassName = "h-14 px-8 bg-primary text-white hover:bg-primary/90 w-full sm:w-auto",
-  inputClassName = "w-full h-14 pl-5 pr-12 text-lg rounded-md shadow-sm border-gray-300",
+  inputClassName = "w-full h-14 pl-5 pr-12 text-xs md:text-lg rounded-md shadow-sm border-gray-300",
   showButton = true,
   maxSuggestions = 8,
   className = "",
