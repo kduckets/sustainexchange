@@ -1,14 +1,15 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react"
 import { specializations, standardSectors } from "@/data/providers"
 
 // Hook to get all search suggestions
 export function useSearchSuggestions() {
-  const allSuggestions = useRef<string[]>([])
+  const [allSuggestions, setAllSuggestions] = useState<string[]>([])
 
   useEffect(() => {
-    if (allSuggestions.current.length > 0) return
+    // Skip if we already have suggestions
+    if (allSuggestions.length > 0) return
 
     // Extract all specializations
     const allSpecializations = Object.values(specializations).flat()
@@ -66,9 +67,9 @@ export function useSearchSuggestions() {
     ]
 
     // Remove duplicates and sort alphabetically
-    allSuggestions.current = Array.from(new Set(suggestions)).sort()
-  }, [])
+    setAllSuggestions(Array.from(new Set(suggestions)).sort())
+  }, [allSuggestions.length])
 
-  return allSuggestions.current
+  return allSuggestions
 }
 

@@ -17,16 +17,11 @@ export default function Home() {
   const [suggestions, setSuggestions] = useState<string[]>([])
   const searchSuggestionsFromHook = useSearchSuggestions()
 
-  // Ensure suggestions are loaded - use useCallback to prevent infinite loops
+  // Ensure suggestions are loaded properly
   useEffect(() => {
-    // Only update if the suggestions have changed and are not empty
-    if (
-      searchSuggestionsFromHook.length > 0 &&
-      JSON.stringify(searchSuggestionsFromHook) !== JSON.stringify(suggestions)
-    ) {
-      setSuggestions(searchSuggestionsFromHook)
-    }
-  }, [searchSuggestionsFromHook, suggestions])
+    // Set suggestions directly from the hook
+    setSuggestions(searchSuggestionsFromHook)
+  }, [searchSuggestionsFromHook])
 
   // Use useCallback to prevent recreating this function on every render
   const handleSearch = useCallback(
@@ -65,10 +60,10 @@ export default function Home() {
               </p>
 
               {/* Isolated search container with high z-index */}
-              <div className="max-w-2xl mx-auto mb-8" style={{ position: "relative", zIndex: 1000 }}>
+              <div className="max-w-2xl mx-auto mb-8 relative z-50">
                 <SearchTypeahead
                   placeholder="How can we help?"
-                  suggestions={suggestions}
+                  suggestions={searchSuggestionsFromHook} // Use suggestions directly from hook
                   onSearch={handleSearch}
                   buttonText="Find Experts"
                 />

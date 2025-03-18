@@ -74,6 +74,11 @@ export function SearchTypeahead({
       return
     }
 
+    // Make sure we have suggestions to filter
+    if (processedSuggestions.length === 0) {
+      return
+    }
+
     const filtered = processedSuggestions
       .filter((suggestion) => suggestion.toLowerCase().includes(query))
       .slice(0, maxSuggestions)
@@ -180,7 +185,7 @@ export function SearchTypeahead({
           {showSuggestions && filteredSuggestions.length > 0 && (
             <ul
               id="search-suggestions"
-              className="absolute w-full bg-white mt-1 rounded-md shadow-lg max-h-60 overflow-auto border border-gray-200"
+              className="absolute w-full bg-white mt-1 rounded-md shadow-lg max-h-60 overflow-auto border border-gray-200 text-left"
               style={{
                 zIndex: 9999,
                 position: "absolute",
@@ -192,7 +197,7 @@ export function SearchTypeahead({
               {filteredSuggestions.map((suggestion, index) => (
                 <li
                   key={suggestion}
-                  className={`px-4 py-2 cursor-pointer hover:bg-accent ${
+                  className={`pl-3 pr-4 py-2 cursor-pointer hover:bg-accent text-left ${
                     index === activeSuggestionIndex ? "bg-accent text-primary" : ""
                   }`}
                   onClick={() => handleSuggestionClick(suggestion)}
