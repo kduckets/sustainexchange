@@ -16,7 +16,7 @@ export function useSearchSuggestions() {
     // Extract main specialization categories
     const mainCategories = Object.keys(specializations)
 
-    // Combine all data sources
+    // Combine all data sources (excluding markets)
     const suggestions = [
       ...allSpecializations,
       ...mainCategories,

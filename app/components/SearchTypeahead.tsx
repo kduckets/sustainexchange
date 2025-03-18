@@ -3,7 +3,7 @@
 import { Search, X } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import type React from "react"
 
 interface SearchTypeaheadProps {
@@ -37,21 +37,53 @@ export function SearchTypeahead({
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0)
   const searchRef = useRef<HTMLDivElement>(null)
 
+  // Process suggestions to split entries with commas or "&"
+  const processedSuggestions = useMemo(() => {
+    const result: string[] = []
+
+    suggestions.forEach((suggestion) => {
+      // Split by commas and "&" symbols
+      const parts = suggestion.split(/,\s*|\s*&\s*/)
+
+      if (parts.length === 1) {
+        // If there's only one part, just add the original suggestion
+        result.push(suggestion)
+      } else {
+        // If there are multiple parts, add each part as a separate suggestion
+        parts.forEach((part) => {
+          const trimmedPart = part.trim()
+          if (trimmedPart && !result.includes(trimmedPart)) {
+            result.push(trimmedPart)
+          }
+        })
+      }
+    })
+
+    // Remove duplicates and sort
+    return Array.from(new Set(result)).sort()
+  }, [suggestions])
+
   // Filter suggestions based on input
   useEffect(() => {
-    if (searchQuery.trim() === "") {
+    const query = searchQuery.toLowerCase().trim()
+
+    // Only filter suggestions if there's text
+    if (query === "") {
       setFilteredSuggestions([])
+      setShowSuggestions(false)
       return
     }
 
-    const query = searchQuery.toLowerCase()
-    const filtered = suggestions
+    const filtered = processedSuggestions
       .filter((suggestion) => suggestion.toLowerCase().includes(query))
       .slice(0, maxSuggestions)
 
     setFilteredSuggestions(filtered)
     setActiveSuggestionIndex(0)
-  }, [searchQuery, suggestions, maxSuggestions])
+
+    // Show suggestions if we have matches and there's text
+    setShowSuggestions(filtered.length > 0)
+  }, [searchQuery, processedSuggestions, maxSuggestions])
 
   // Handle click outside to close suggestions
   useEffect(() => {
@@ -69,9 +101,8 @@ export function SearchTypeahead({
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    if (searchQuery.trim()) {
-      onSearch(searchQuery.trim())
-    }
+    setShowSuggestions(false)
+    onSearch(searchQuery.trim())
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -89,6 +120,7 @@ export function SearchTypeahead({
       e.preventDefault()
       setSearchQuery(filteredSuggestions[activeSuggestionIndex])
       setShowSuggestions(false)
+      onSearch(filteredSuggestions[activeSuggestionIndex])
     } else if (e.key === "Escape") {
       setShowSuggestions(false)
     }
@@ -97,15 +129,17 @@ export function SearchTypeahead({
   const handleSuggestionClick = (suggestion: string) => {
     setSearchQuery(suggestion)
     setShowSuggestions(false)
+    onSearch(suggestion)
   }
 
   const clearSearch = () => {
     setSearchQuery("")
+    setFilteredSuggestions([])
     setShowSuggestions(false)
   }
 
   return (
-    <div className={className}>
+    <div className={className} style={{ position: "relative" }}>
       <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-grow" ref={searchRef}>
           <div className="relative">
@@ -115,10 +149,9 @@ export function SearchTypeahead({
               className={inputClassName}
               value={searchQuery}
               onChange={(e) => {
-                setSearchQuery(e.target.value)
-                setShowSuggestions(true)
+                const value = e.target.value
+                setSearchQuery(value)
               }}
-              onFocus={() => setShowSuggestions(true)}
               onKeyDown={handleKeyDown}
               aria-autocomplete="list"
               aria-controls="search-suggestions"
@@ -143,11 +176,18 @@ export function SearchTypeahead({
             </button>
           </div>
 
-          {/* Suggestions dropdown */}
+          {/* Suggestions dropdown with individual terms */}
           {showSuggestions && filteredSuggestions.length > 0 && (
             <ul
               id="search-suggestions"
-              className="absolute z-10 w-full bg-white mt-1 rounded-md shadow-lg max-h-60 overflow-auto"
+              className="absolute w-full bg-white mt-1 rounded-md shadow-lg max-h-60 overflow-auto border border-gray-200"
+              style={{
+                zIndex: 9999,
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                right: 0,
+              }}
             >
               {filteredSuggestions.map((suggestion, index) => (
                 <li
@@ -158,7 +198,7 @@ export function SearchTypeahead({
                   onClick={() => handleSuggestionClick(suggestion)}
                   onMouseEnter={() => setActiveSuggestionIndex(index)}
                 >
-                  {suggestion}
+                  {suggestion.toLowerCase()}
                 </li>
               ))}
             </ul>

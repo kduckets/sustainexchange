@@ -9,13 +9,27 @@ import type React from "react"
 import Image from "next/image"
 import { SearchTypeahead } from "@/app/components/SearchTypeahead"
 import { useSearchSuggestions } from "@/app/components/SearchSuggestions"
+import { useEffect, useState } from "react"
 
 export default function Home() {
   const router = useRouter()
-  const searchSuggestions = useSearchSuggestions()
+  const [suggestions, setSuggestions] = useState<string[]>([])
+  const searchSuggestionsFromHook = useSearchSuggestions()
+
+  // Ensure suggestions are loaded
+  useEffect(() => {
+    console.log("Home page suggestions:", searchSuggestionsFromHook.length)
+    setSuggestions(searchSuggestionsFromHook)
+  }, [searchSuggestionsFromHook])
 
   const handleSearch = (query: string) => {
-    router.push(`/providers?q=${encodeURIComponent(query)}`)
+    // Navigate to providers page with query parameter if query exists
+    if (query) {
+      router.push(`/providers?q=${encodeURIComponent(query)}`)
+    } else {
+      // Navigate to providers page without query parameter if no query
+      router.push("/providers")
+    }
   }
 
   return (
@@ -40,10 +54,11 @@ export default function Home() {
                 governance goals.
               </p>
 
-              <div className="max-w-2xl mx-auto mb-8">
+              {/* Isolated search container with high z-index */}
+              <div className="max-w-2xl mx-auto mb-8" style={{ position: "relative", zIndex: 1000 }}>
                 <SearchTypeahead
                   placeholder="What sustainability challenge can we help with?"
-                  suggestions={searchSuggestions}
+                  suggestions={suggestions}
                   onSearch={handleSearch}
                   buttonText="Find Experts"
                 />
@@ -91,6 +106,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Rest of the component remains the same */}
       {/* Services Section */}
       <section className="py-20 bg-white">
         <div className="container-wide">
