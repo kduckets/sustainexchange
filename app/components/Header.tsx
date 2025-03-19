@@ -25,7 +25,7 @@ export function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/contact">
               <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                Contact
+                About
               </Button>
             </Link>
             <Button className="bg-primary text-white hover:bg-primary/90">Expert Log in</Button>

@@ -51,13 +51,9 @@ export default function Home() {
         <div className="relative z-10 pt-10 md:pt-20 pb-24">
           <div className="container-wide">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 leading-tight">
-                Connecting businesses with sustainability experts
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-900 mb-6 leading-tight">
+              Find sustainability experts to tackle your toughest projects              
               </h1>
-              <p className="text-xl text-gray-800 mb-8">
-                Find the right sustainability partners to help your organization achieve its environmental, social, and
-                governance goals.
-              </p>
 
               {/* Isolated search container with high z-index */}
               <div className="max-w-2xl mx-auto mb-8 relative z-50">
@@ -65,7 +61,7 @@ export default function Home() {
                   placeholder="How can we help?"
                   suggestions={searchSuggestionsFromHook} // Use suggestions directly from hook
                   onSearch={handleSearch}
-                  buttonText="Find Experts"
+                  buttonText="All Experts"
                 />
               </div>
 
@@ -95,8 +91,8 @@ export default function Home() {
                 <div className="backdrop-blur-sm p-6 rounded-lg shadow-md border-2 border-primary">
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="text-center sm:text-left">
-                      <h3 className="text-xl font-bold text-gray-800 mb-1">Have a sustainability project?</h3>
-                      <p className="text-gray-600">Post your RFP and connect with qualified experts</p>
+                      <h3 className="text-xl font-bold text-gray-800 mb-1">Project ready to go?</h3>
+                      <p className="text-gray-600">Post your sustainability project today to attract qualified experts</p>
                     </div>
                     <Link href="/rfx-hub">
                       <Button className="bg-primary text-white hover:bg-primary/90 px-6 py-3 text-lg whitespace-nowrap">
@@ -116,9 +112,9 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="container-wide">
           <div className="max-w-5xl mx-auto text-center">
-            <h2 className="section-title text-center">Sustainability Expertise Areas</h2>
+            <h2 className="section-title text-center">Sustainability Solutions</h2>
             <p className="section-subtitle text-center">
-              Learn more about the specialized services our sustainability experts provide
+            Learn more about the specialized services provided by this community of sustainability experts
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
@@ -131,19 +127,19 @@ export default function Home() {
               <ServiceCard
                 icon={<Wrench className="w-12 h-12" />}
                 title="Technical Support"
-                description="Implement practical solutions for energy, waste, water, and carbon management"
+                description="Implement practical solutions for energy, waste, water, and more"
                 expertise="Technical Support"
               />
               <ServiceCard
                 icon={<Calculator className="w-12 h-12" />}
                 title="Auditing & Verification"
-                description="Validate your sustainability performance with third-party assurance"
+                description="Assess and validate your sustainability performance with third-party assurance"
                 expertise="Auditing, Testing & Verification"
               />
               <ServiceCard
                 icon={<FileText className="w-12 h-12" />}
                 title="PR & Communications"
-                description="Effectively communicate your sustainability story to stakeholders"
+                description="Effectively communicate your sustainability story to key stakeholders"
                 expertise="PR & Communications"
               />
             </div>
@@ -161,7 +157,7 @@ export default function Home() {
               achieve your environmental and social goals.
             </p>
             <Link href="/rfx-hub">
-              <Button className="bg-primary text-white hover:bg-primary/90 px-8 py-3 text-lg">
+              <Button className="bg-secondary text-white hover:bg-primary/90 px-8 py-3 text-lg">
                 Visit RFX Hub <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>

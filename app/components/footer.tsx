@@ -14,8 +14,7 @@ export default function Footer() {
               <h3 className="text-xl font-bold">SustainExchange</h3>
             </div>
             <p className="text-gray-400 mb-6">
-              Connecting sustainability seekers with top-tier service providers to accelerate the transition to a more
-              sustainable future.
+            Connecting businesses with top sustainability experts to achieve their goals faster and more effectively.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white">
@@ -54,11 +53,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">For Seekers</h4>
+            <h4 className="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">For Businesses</h4>
             <ul className="space-y-3">
               <li>
                 <Link href="/providers" className="text-gray-400 hover:text-primary flex items-center">
-                  <ArrowRight className="w-4 h-4 mr-2" /> Find Providers
+                  <ArrowRight className="w-4 h-4 mr-2" /> Find Experts
                 </Link>
               </li>
               <li>
@@ -71,42 +70,27 @@ export default function Footer() {
                   <ArrowRight className="w-4 h-4 mr-2" /> Resources
                 </Link>
               </li>
-              <li>
-                <Link href="/case-studies" className="text-gray-400 hover:text-primary flex items-center">
-                  <ArrowRight className="w-4 h-4 mr-2" /> Case Studies
-                </Link>
-              </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">For Providers</h4>
+            <h4 className="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">For Experts</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/join-as-provider" className="text-gray-400 hover:text-primary flex items-center">
-                  <ArrowRight className="w-4 h-4 mr-2" /> Join as Provider
+                <Link href="/join-as-expert" className="text-gray-400 hover:text-primary flex items-center">
+                  <ArrowRight className="w-4 h-4 mr-2" /> Add your company
                 </Link>
               </li>
               <li>
-                <Link href="/provider-dashboard" className="text-gray-400 hover:text-primary flex items-center">
-                  <ArrowRight className="w-4 h-4 mr-2" /> Provider Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link href="/advertise" className="text-gray-400 hover:text-primary flex items-center">
-                  <ArrowRight className="w-4 h-4 mr-2" /> Advertise
-                </Link>
-              </li>
-              <li>
-                <Link href="/success-stories" className="text-gray-400 hover:text-primary flex items-center">
-                  <ArrowRight className="w-4 h-4 mr-2" /> Success Stories
+                <Link href="/expert-dashboard" className="text-gray-400 hover:text-primary flex items-center">
+                  <ArrowRight className="w-4 h-4 mr-2" /> View RFPs
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">Company</h4>
+            <h4 className="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">SustainExchange</h4>
             <ul className="space-y-3">
               <li>
                 <Link href="/about" className="text-gray-400 hover:text-primary flex items-center">
