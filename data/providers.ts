@@ -15,6 +15,12 @@ export interface ProviderProfile {
     description: string
     videoUrl?: string
   }[]
+  caseStudies?: {
+    title: string
+    description: string
+    imageUrl: string
+    url: string
+  }[]
   testimonials: {
     quote: string
     author: string
@@ -139,6 +145,15 @@ export const providers: ProviderProfile[] = [
         videoUrl: "",
       },
     ],
+    caseStudies: [
+      {
+        title: "Leading Dairy Brand Successfully Implements Supply Chain Emission Reduction Strategy",
+        description:
+          "Learn how a leading dairy brand worked with 3Degrees to develop and implement a comprehensive supply chain emission reduction strategy, focusing on methane reduction from dairy farms.",
+        imageUrl: "/case-study-3degrees.png",
+        url: "https://3degreesinc.com/insights/leading-dairy-brand-successfully-implements-supply-chain-emission-reduction-strategy/",
+      },
+    ],
     testimonials: [
       {
         quote:
@@ -246,6 +261,15 @@ export const providers: ProviderProfile[] = [
         videoUrl: "",
       },
     ],
+    caseStudies: [
+      {
+        title: "Leveling Up a Wind Farm's Positive Impact",
+        description:
+          "ERM helped a wind farm developer enhance their environmental and social performance, implementing biodiversity initiatives and community engagement strategies that went beyond compliance requirements.",
+        imageUrl: "/case-study-erm.png",
+        url: "https://www.erm.com/projects/case-study-leveling-up-a-wind-farms-positive-impact/",
+      },
+    ],
     testimonials: [
       {
         quote:
@@ -296,6 +320,15 @@ export const providers: ProviderProfile[] = [
         description:
           "Developed a comprehensive climate action strategy to help the city achieve its goal of becoming net-zero by 2040.",
         videoUrl: "",
+      },
+    ],
+    caseStudies: [
+      {
+        title: "Guggenheim Foundation Headquarters",
+        description:
+          "WSP provided sustainable design services for the Guggenheim Foundation's headquarters, implementing energy-efficient systems, water conservation measures, and sustainable materials to achieve LEED certification.",
+        imageUrl: "/case-study-wsp.png",
+        url: "https://www.wsp.com/en-us/projects/guggenheim-foundation-headquarters",
       },
     ],
     testimonials: [

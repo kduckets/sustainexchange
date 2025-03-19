@@ -5,6 +5,7 @@ import { notFound } from "next/navigation"
 import { Carousel } from "@/app/components/Carousel"
 import { Header } from "@/app/components/Header"
 import { YouTubeEmbed } from "@/app/components/YouTubeEmbed"
+import { CaseStudyPreview } from "@/app/components/CaseStudyPreview"
 
 export default function ProviderProfile({ params }: { params: { id: string } }) {
   const provider = providers.find((p) => p.id === params.id)
@@ -76,6 +77,25 @@ export default function ProviderProfile({ params }: { params: { id: string } }) 
                 <p>{provider.specializations.join(", ")}</p>
               </div>
             </div>
+
+            {/* Case Studies Section */}
+            {provider.caseStudies && provider.caseStudies.length > 0 && (
+              <section className="mb-16">
+                <h2 className="text-2xl font-bold text-center mb-8">Case Studies</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {provider.caseStudies.map((caseStudy, index) => (
+                    <CaseStudyPreview
+                      key={index}
+                      title={caseStudy.title}
+                      description={caseStudy.description}
+                      imageUrl={caseStudy.imageUrl}
+                      url={caseStudy.url}
+                      provider={provider.name}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
 
             {provider.projects.some((project) => project.videoUrl) && (
               <section className="mb-16">
