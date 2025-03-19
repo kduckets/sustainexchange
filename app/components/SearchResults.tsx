@@ -16,9 +16,10 @@ interface SearchResultsProps {
     specializations: string[]
   }
   onClearAll: () => void
+  onRemoveFilter: (category: "marketsServed" | "sectorsServed" | "specializations", value: string) => void
 }
 
-export function SearchResults({ results, searchQuery, activeFilters, onClearAll }: SearchResultsProps) {
+export function SearchResults({ results, searchQuery, activeFilters, onClearAll, onRemoveFilter }: SearchResultsProps) {
   const hasActiveFilters = Object.values(activeFilters).some((filter) => filter.length > 0)
   const showClearAll = searchQuery || hasActiveFilters
 
@@ -26,7 +27,14 @@ export function SearchResults({ results, searchQuery, activeFilters, onClearAll 
     return Object.entries(activeFilters).flatMap(([category, values]) =>
       values.map((value) => (
         <Badge key={`${category}-${value}`} variant="outline" className="mr-2 mb-2">
-          {value} <X className="ml-1 h-3 w-3 cursor-pointer" />
+          {value}{" "}
+          <X
+            className="ml-1 h-3 w-3 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation()
+              onRemoveFilter(category as "marketsServed" | "sectorsServed" | "specializations", value)
+            }}
+          />
         </Badge>
       )),
     )
@@ -36,7 +44,7 @@ export function SearchResults({ results, searchQuery, activeFilters, onClearAll 
     <div>
       <div className="flex flex-wrap items-center justify-between mb-6">
         <h3 className="text-2xl font-bold text-gray-800 mb-2">
-          {results.length > 0 ? `${results.length} Experts Found` : "Search Results"}
+          {results.length > 0 ? `${results.length} Providers Found` : "Search Results"}
         </h3>
         {showClearAll && (
           <Button variant="outline" size="sm" onClick={onClearAll} className="mb-2">

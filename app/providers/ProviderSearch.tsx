@@ -1,6 +1,6 @@
 "use client"
 
-import { Filter, ChevronDown, ChevronUp } from "lucide-react"
+import { Filter, Info, Tag, ChevronDown, ChevronUp } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,8 @@ import { useSearchParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import { SearchTypeahead } from "@/app/components/SearchTypeahead"
 import { useSearchSuggestions } from "@/app/components/SearchSuggestions"
+import { Badge } from "@/components/ui/badge"
+import type React from "react"
 
 type Filters = {
   marketsServed: string[]
@@ -46,16 +48,27 @@ const filterResults = (query: string, currentFilters: Filters, providersList: ty
     const matchesSectors =
       currentFilters.sectorsServed.length === 0 ||
       currentFilters.sectorsServed.some((sector) => provider.sectorsServed.includes(sector))
+
+    // For specializations, check if any of the provider's specializations match the main categories
+    // or if they match any of the subcategories of the selected main categories
     const matchesSpecializations =
       currentFilters.specializations.length === 0 ||
-      currentFilters.specializations.some((area) => {
-        if (Object.keys(specializations).includes(area)) {
-          return specializations[area as keyof typeof specializations].some((subArea) =>
-            provider.specializations.includes(subArea),
+      currentFilters.specializations.some((category) => {
+        // Direct match with the main category
+        if (provider.specializations.includes(category)) {
+          return true
+        }
+
+        // Check if the category is one of the main categories and if the provider has any of its subcategories
+        if (Object.keys(specializations).includes(category)) {
+          return specializations[category as keyof typeof specializations].some((subCategory) =>
+            provider.specializations.includes(subCategory),
           )
         }
-        return provider.specializations.includes(area)
+
+        return false
       })
+
     const matchesFirmSize = currentFilters.firmSize.length === 0 || currentFilters.firmSize.includes(provider.firmSize)
     const matchesYearsInBusiness =
       currentFilters.yearsInBusiness.length === 0 ||
@@ -88,9 +101,14 @@ export default function ProviderSearch() {
     yearsInBusiness: [],
   })
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [expandedCategories, setExpandedCategories] = useState<string[]>([])
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const searchSuggestions = useSearchSuggestions()
+
+  // Get all subcategories for tag selection
+  const allProjectTypes = useMemo(() => {
+    return Object.values(specializations).flat()
+  }, [])
 
   const allMarkets = useMemo(() => {
     return standardMarkets
@@ -98,6 +116,11 @@ export default function ProviderSearch() {
 
   const allSectors = useMemo(() => {
     return standardSectors
+  }, [])
+
+  // Just the 4 main specialization categories
+  const mainSpecializations = useMemo(() => {
+    return Object.keys(specializations)
   }, [])
 
   const firmSizes = ["Small", "Mid-size", "Large"]
@@ -143,12 +166,125 @@ export default function ProviderSearch() {
     })
   }
 
-  const toggleCategory = (category: string) => {
-    setExpandedCategories((prev) =>
-      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
+  const handleTagSelect = (tag: string) => {
+    setSelectedTags((prev) => {
+      const newTags = prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+
+      // Filter results based on selected tags
+      const filteredResults = searchResults.filter(
+        (provider) => newTags.length === 0 || newTags.some((tag) => provider.specializations.includes(tag)),
+      )
+
+      setSearchResults(filteredResults.length > 0 ? filteredResults : filterResults(searchQuery, filters, providers))
+      return newTags
+    })
+  }
+
+  const handleRemoveFilter = (category: keyof Filters, value: string) => {
+    setFilters((prev) => {
+      const updatedFilters = {
+        ...prev,
+        [category]: prev[category].filter((item) => item !== value),
+      }
+
+      // If removing a tag from selectedTags
+      if (category === "specializations" && selectedTags.includes(value)) {
+        setSelectedTags((prev) => prev.filter((tag) => tag !== value))
+      }
+
+      setSearchResults(filterResults(searchQuery, updatedFilters, providers))
+      return updatedFilters
+    })
+  }
+
+  // Modify the FilterSection component to support collapsible sections
+  function FilterSection({
+    title,
+    items,
+    selectedItems,
+    onChange,
+    maxHeight = "200px",
+    tooltip = null,
+    collapsible = false,
+    defaultCollapsed = false,
+  }: {
+    title: string
+    items: string[]
+    selectedItems: string[]
+    onChange: (value: string) => void
+    maxHeight?: string
+    tooltip?: React.ReactNode
+    collapsible?: boolean
+    defaultCollapsed?: boolean
+  }) {
+    const [showTooltip, setShowTooltip] = useState(false)
+    const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed)
+
+    return (
+      <div className="mb-6">
+        <div className="flex items-center mb-3">
+          <h4 className="font-medium text-gray-700">{title}</h4>
+          {tooltip && (
+            <div className="relative ml-2">
+              <button
+                type="button"
+                className="text-gray-400 hover:text-gray-600"
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+                onClick={() => setShowTooltip(!showTooltip)}
+                aria-label={`Information about ${title}`}
+              >
+                <Info className="h-4 w-4" />
+              </button>
+              {showTooltip && (
+                <div className="absolute z-50 w-72 p-4 bg-white rounded-md shadow-lg border border-gray-200 text-sm text-gray-700 left-0 top-6">
+                  {tooltip}
+                  <div className="absolute -top-2 left-2 w-3 h-3 bg-white border-t border-l border-gray-200 transform rotate-45"></div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {collapsible && (
+            <button
+              type="button"
+              className="ml-auto text-gray-400 hover:text-gray-600"
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              aria-label={isCollapsed ? `Expand ${title}` : `Collapse ${title}`}
+            >
+              {isCollapsed ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
+            </button>
+          )}
+        </div>
+
+        {/* Show selected items count when collapsed */}
+        {collapsible && isCollapsed && selectedItems.length > 0 && (
+          <div className="text-sm text-primary mb-2">{selectedItems.length} selected</div>
+        )}
+
+        {/* Content - hidden when collapsed */}
+        {(!collapsible || !isCollapsed) && (
+          <div className={`space-y-2 overflow-y-auto`} style={{ maxHeight }}>
+            {items.map((item) => (
+              <div key={item} className="flex items-center">
+                <Checkbox
+                  id={`${title}-${item}`}
+                  checked={selectedItems.includes(item)}
+                  onCheckedChange={() => onChange(item)}
+                  className="text-primary border-gray-300"
+                />
+                <Label htmlFor={`${title}-${item}`} className="ml-2 text-sm text-gray-600 cursor-pointer">
+                  {item}
+                </Label>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     )
   }
 
+  // Update the FiltersContent component to use the collapsible feature for Sectors Served
   const FiltersContent = () => (
     <div className="space-y-6">
       <FilterSection
@@ -157,65 +293,48 @@ export default function ProviderSearch() {
         selectedItems={filters.marketsServed}
         onChange={(value) => handleFilterChange("marketsServed", value)}
       />
-      <div className="mb-6">
-        <h4 className="font-medium mb-2">Specializations</h4>
-        <div className="space-y-2 max-h-[300px] overflow-y-auto">
-          {Object.entries(specializations).map(([category, subcategories]) => (
-            <div key={category} className="space-y-2">
-              <div className="flex items-center">
-                <Checkbox
-                  id={`category-${category}`}
-                  checked={filters.specializations.includes(category)}
-                  onCheckedChange={() => handleFilterChange("specializations", category)}
-                />
-                <Label htmlFor={`category-${category}`} className="ml-2 text-sm font-medium">
-                  {category}
-                </Label>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="ml-auto p-0 h-6 w-6"
-                  onClick={() => toggleCategory(category)}
-                >
-                  {expandedCategories.includes(category) ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-              {expandedCategories.includes(category) && (
-                <div className="ml-6 space-y-2">
-                  {subcategories.map((subcategory) => (
-                    <div key={subcategory} className="flex items-center">
-                      <Checkbox
-                        id={`subcategory-${subcategory}`}
-                        checked={filters.specializations.includes(subcategory)}
-                        onCheckedChange={() => handleFilterChange("specializations", subcategory)}
-                      />
-                      <Label htmlFor={`subcategory-${subcategory}`} className="ml-2 text-sm">
-                        {subcategory}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+
+      {/* Simplified Specializations section with just the 4 main categories */}
+      <FilterSection
+        title="Specializations"
+        items={mainSpecializations}
+        selectedItems={filters.specializations}
+        onChange={(value) => handleFilterChange("specializations", value)}
+      />
+
       <FilterSection
         title="Sectors Served"
         items={allSectors}
         selectedItems={filters.sectorsServed}
         onChange={(value) => handleFilterChange("sectorsServed", value)}
+        collapsible={true}
+        defaultCollapsed={true}
+        maxHeight="none" // Remove scrolling when expanded
       />
+
       <FilterSection
         title="Firm Size"
         items={firmSizes}
         selectedItems={filters.firmSize}
+        tooltip={
+          <div className="space-y-2">
+            <p className="font-medium text-gray-800">Firm Size Categories:</p>
+            <ul className="list-disc pl-5 space-y-1.5">
+              <li>
+                <span className="font-medium">Small:</span> Fewer than 25 employees
+              </li>
+              <li>
+                <span className="font-medium">Mid-size:</span> Between 25-100 employees
+              </li>
+              <li>
+                <span className="font-medium">Large:</span> More than 100 employees
+              </li>
+            </ul>
+          </div>
+        }
         onChange={(value) => handleFilterChange("firmSize", value)}
       />
+
       <FilterSection
         title="Years in Business"
         items={yearsInBusinessRanges}
@@ -227,6 +346,7 @@ export default function ProviderSearch() {
 
   const clearAll = () => {
     setSearchQuery("")
+    setSelectedTags([])
     const clearedFilters: Filters = {
       marketsServed: [],
       sectorsServed: [],
@@ -239,6 +359,20 @@ export default function ProviderSearch() {
     setSearchResults(filterResults("", clearedFilters, providers))
   }
 
+  // Get popular project types for quick filtering
+  const popularProjectTypes = useMemo(() => {
+    return [
+      "Sustainability Strategy Development",
+      "Net Zero & Decarbonization Planning",
+      "Carbon Footprint Assessment, GHG Accounting & Data Analysis",
+      "ESG & Sustainable Finance",
+      "Sustainability & ESG Reporting",
+      "Supply Chain Sustainability",
+      "Renewable Energy & Energy Services",
+      "Climate & Environmental Risk Assessment",
+    ]
+  }, [])
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -246,13 +380,7 @@ export default function ProviderSearch() {
       {/* Hero Section */}
       <div className="relative">
         <div className="absolute inset-0 w-full h-64 z-0">
-          <Image
-            src="/clouds.jpg"
-            alt="Serene sky with clouds"
-            fill
-            priority
-            className="object-cover"
-          />
+          <Image src="/clouds.jpg" alt="Serene sky with clouds" fill priority className="object-cover" />
           <div className="absolute inset-0 bg-black/10"></div>
         </div>
 
@@ -278,6 +406,26 @@ export default function ProviderSearch() {
       </div>
 
       <div className="container-wide py-8">
+        {/* Project Type Tags for quick filtering - hidden on mobile */}
+        <div className="hidden md:block bg-white p-4 rounded-lg shadow-sm mb-6">
+          <div className="flex items-center mb-3">
+            <Tag className="h-5 w-5 mr-2 text-primary" />
+            <h3 className="font-medium text-gray-700">Popular Project Types</h3>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {popularProjectTypes.map((tag) => (
+              <Badge
+                key={tag}
+                variant={selectedTags.includes(tag) ? "default" : "outline"}
+                className={`cursor-pointer ${selectedTags.includes(tag) ? "bg-primary" : "hover:bg-accent"}`}
+                onClick={() => handleTagSelect(tag)}
+              >
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        </div>
+
         <div className="md:hidden mb-8">
           <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
             <SheetTrigger asChild>
@@ -313,48 +461,18 @@ export default function ProviderSearch() {
                 <SearchResults
                   results={searchResults}
                   searchQuery={searchQuery}
-                  activeFilters={filters}
+                  activeFilters={{
+                    ...filters,
+                    // Include selected tags in the active filters display
+                    specializations: [...filters.specializations, ...selectedTags],
+                  }}
                   onClearAll={clearAll}
+                  onRemoveFilter={handleRemoveFilter}
                 />
               )}
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  )
-}
-
-function FilterSection({
-  title,
-  items,
-  selectedItems,
-  onChange,
-  maxHeight = "200px",
-}: {
-  title: string
-  items: string[]
-  selectedItems: string[]
-  onChange: (value: string) => void
-  maxHeight?: string
-}) {
-  return (
-    <div className="mb-6">
-      <h4 className="font-medium mb-3 text-gray-700">{title}</h4>
-      <div className={`space-y-2 overflow-y-auto`} style={{ maxHeight }}>
-        {items.map((item) => (
-          <div key={item} className="flex items-center">
-            <Checkbox
-              id={`${title}-${item}`}
-              checked={selectedItems.includes(item)}
-              onCheckedChange={() => onChange(item)}
-              className="text-primary border-gray-300"
-            />
-            <Label htmlFor={`${title}-${item}`} className="ml-2 text-sm text-gray-600 cursor-pointer">
-              {item}
-            </Label>
-          </div>
-        ))}
       </div>
     </div>
   )

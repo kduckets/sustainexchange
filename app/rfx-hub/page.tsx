@@ -61,14 +61,14 @@ export default function RFXHub() {
         <div className="relative z-10 pt-16 pb-20">
           <div className="container-wide">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Sustainability RFX Hub</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Sustainability RFP Hub</h1>
               <p className="text-xl text-gray-700 mb-8">
-                Post your RFP/RFI/RFQ or browse opportunities in the sustainability sector
+              Post your sustainability project or browse current opportunities
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button className="bg-primary text-white hover:bg-primary/90 px-6 py-3 text-lg">
-                  Post an Opportunity <ArrowRight className="ml-2 h-5 w-5" />
+                  Post a Project <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button
                   variant="outline"
