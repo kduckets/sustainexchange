@@ -72,14 +72,13 @@ export const specializations = {
 
 // Standard markets list
 export const standardMarkets = [
-  "Global",
-  "North America",
-  "Europe",
+  "Africa",
   "Asia",
+  "Australia (Oceania)",
+  "Europe",
   "Latin America",
   "Middle East",
-  "Africa",
-  "Australia (Oceania)",
+  "North America",
 ]
 
 // Standard sectors list

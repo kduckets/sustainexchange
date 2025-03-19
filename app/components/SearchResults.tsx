@@ -36,7 +36,7 @@ export function SearchResults({ results, searchQuery, activeFilters, onClearAll 
     <div>
       <div className="flex flex-wrap items-center justify-between mb-6">
         <h3 className="text-2xl font-bold text-gray-800 mb-2">
-          {results.length > 0 ? `${results.length} Providers Found` : "Search Results"}
+          {results.length > 0 ? `${results.length} Experts Found` : "Search Results"}
         </h3>
         {showClearAll && (
           <Button variant="outline" size="sm" onClick={onClearAll} className="mb-2">

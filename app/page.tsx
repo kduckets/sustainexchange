@@ -107,7 +107,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Rest of the component remains the same */}
       {/* Services Section */}
       <section className="py-20 bg-white">
         <div className="container-wide">

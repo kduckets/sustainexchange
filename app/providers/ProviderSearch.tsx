@@ -81,7 +81,7 @@ export default function ProviderSearch() {
   const [searchResults, setSearchResults] = useState<typeof providers>([])
   const [searchQuery, setSearchQuery] = useState("")
   const [filters, setFilters] = useState<Filters>({
-    marketsServed: [],
+    marketsServed: ["North America"],
     sectorsServed: [],
     specializations: [],
     firmSize: [],
@@ -118,6 +118,12 @@ export default function ProviderSearch() {
       return newFilters
     })
   }, [searchParams])
+
+  // Initial load - filter results with default North America filter
+  useEffect(() => {
+    setSearchResults(filterResults("", filters, providers))
+    setIsLoading(false)
+  }, [])
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
