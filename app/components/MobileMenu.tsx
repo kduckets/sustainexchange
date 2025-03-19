@@ -35,7 +35,7 @@ export function MobileMenu() {
               className="flex items-center py-2 text-lg hover:text-primary transition-colors"
             >
               <Search className="w-5 h-5 mr-3" />
-              Find Providers
+              Find Experts
             </Link>
             <Link
               href="/rfx-hub"
@@ -43,7 +43,7 @@ export function MobileMenu() {
               className="flex items-center py-2 text-lg hover:text-primary transition-colors"
             >
               <FileText className="w-5 h-5 mr-3" />
-              RFX Hub
+              RFP Hub
             </Link>
           </div>
 

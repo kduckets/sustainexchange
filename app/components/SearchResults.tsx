@@ -44,7 +44,7 @@ export function SearchResults({ results, searchQuery, activeFilters, onClearAll,
     <div>
       <div className="flex flex-wrap items-center justify-between mb-6">
         <h3 className="text-2xl font-bold text-gray-800 mb-2">
-          {results.length > 0 ? `${results.length} Providers Found` : "Search Results"}
+          {results.length > 0 ? `${results.length} Experts Found` : "Search Results"}
         </h3>
         {showClearAll && (
           <Button variant="outline" size="sm" onClick={onClearAll} className="mb-2">
@@ -64,7 +64,7 @@ export function SearchResults({ results, searchQuery, activeFilters, onClearAll,
       {results.length === 0 ? (
         <div className="text-center py-12 bg-gray-50 rounded-lg">
           <h3 className="text-2xl font-semibold mb-4">No results found</h3>
-          <p className="text-gray-600 mb-6">Try adjusting your search or filters to find more providers.</p>
+          <p className="text-gray-600 mb-6">Try adjusting your search or filters to find more experts.</p>
           <Button onClick={onClearAll} className="bg-primary text-white hover:bg-primary/90">
             Clear Filters
           </Button>
