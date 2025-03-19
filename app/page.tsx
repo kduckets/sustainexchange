@@ -158,7 +158,7 @@ export default function Home() {
             </p>
             <Link href="/rfx-hub">
               <Button className="bg-secondary text-white hover:bg-primary/90 px-8 py-3 text-lg">
-                Visit RFX Hub <ArrowRight className="ml-2 h-5 w-5" />
+                Visit RFP Hub <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
