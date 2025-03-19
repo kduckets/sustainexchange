@@ -87,7 +87,7 @@ export default function Home() {
                   expertise="PR & Communications"
                 />
               </div>
-              <div className="max-w-2xl mx-auto">
+              <div className="max-w-2xl mx-auto pt-10">
                 <div className="backdrop-blur-sm p-6 rounded-lg shadow-md border-2 border-primary">
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="text-center sm:text-left">
