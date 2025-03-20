@@ -164,8 +164,7 @@ export default function Home() {
                   achieve your goals.
                 </p>
                 <p className="text-lg text-gray-700">
-                  Our RFP Hub streamlines the process of finding the right sustainability partners for your projects,
-                  whether you're looking for strategy development, technical implementation, or reporting expertise.
+                  Our RFP Hub streamlines the process of finding the right sustainability partners for your projects.
                 </p>
               </div>
 
