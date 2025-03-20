@@ -52,7 +52,7 @@ export default function Home() {
           <div className="container-wide">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-900 mb-6 leading-tight">
-              Find sustainability experts to tackle your toughest projects              
+                Find sustainability experts to tackle your toughest projects
               </h1>
 
               {/* Isolated search container with high z-index */}
@@ -92,7 +92,9 @@ export default function Home() {
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="text-center sm:text-left">
                       <h3 className="text-xl font-bold text-gray-800 mb-1">Project ready to go?</h3>
-                      <p className="text-gray-600">Post your sustainability project today to attract qualified experts</p>
+                      <p className="text-gray-600">
+                        Post your sustainability project today to attract qualified experts
+                      </p>
                     </div>
                     <Link href="/rfx-hub">
                       <Button className="bg-primary text-white hover:bg-primary/90 px-6 py-3 text-lg whitespace-nowrap">
@@ -113,7 +115,7 @@ export default function Home() {
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="section-title text-center">Sustainability Solutions</h2>
             <p className="section-subtitle text-center">
-            Learn more about the specialized services provided by this community of sustainability experts
+              Learn more about the specialized services provided by this community of sustainability experts
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
@@ -149,17 +151,52 @@ export default function Home() {
       {/* RFX Hub Section */}
       <section className="py-20 bg-accent">
         <div className="container-wide">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-gray-800">Sustainability RFP Hub</h2>
-            <p className="text-lg text-gray-700 mb-8">
-              Browse active sustainability RFPs or post your own to connect with qualified experts who can help you
-              achieve your environmental and social goals.
-            </p>
-            <Link href="/rfx-hub">
-              <Button className="bg-secondary text-white hover:bg-primary/90 px-8 py-3 text-lg">
-                Visit RFP Hub <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-8 text-gray-800 text-center">
+              Sustainability RFP Hub
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+              {/* Left column: Description */}
+              <div className="flex flex-col justify-center">
+                <p className="text-lg text-gray-700 mb-4">
+                  Browse active sustainability RFPs or post your own to connect with qualified experts who can help you
+                  achieve your goals.
+                </p>
+                <p className="text-lg text-gray-700">
+                  Our RFP Hub streamlines the process of finding the right sustainability partners for your projects,
+                  whether you're looking for strategy development, technical implementation, or reporting expertise.
+                </p>
+              </div>
+
+              {/* Right column: Screenshot of RFP Hub - now clickable */}
+              <div className="rounded-lg overflow-hidden shadow-md h-full transition-transform hover:scale-[1.02] hover:shadow-lg">
+                <Link href="/rfx-hub" className="block h-full">
+                  <div className="relative h-full">
+                    <Image
+                      src="/rfp-hub-screenshot.png"
+                      alt="Screenshot of the RFP Hub page"
+                      fill
+                      className="object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-primary/0 hover:bg-primary/10 transition-colors flex items-center justify-center">
+                      <span className="opacity-0 hover:opacity-100 transition-opacity bg-primary/80 text-white py-2 px-4 rounded-md">
+                        Visit RFP Hub
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+
+            {/* Centered button at the bottom */}
+            <div className="text-center">
+              <Link href="/rfx-hub">
+                <Button className="bg-secondary text-white hover:bg-primary/90 px-8 py-3 text-lg">
+                  Visit RFP Hub <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
