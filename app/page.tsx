@@ -150,7 +150,7 @@ export default function Home() {
       <section className="py-20 bg-accent">
         <div className="container-wide">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-gray-800">Sustainability RFPs</h2>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-gray-800">Sustainability RFP Hub</h2>
             <p className="text-lg text-gray-700 mb-8">
               Browse active sustainability RFPs or post your own to connect with qualified experts who can help you
               achieve your environmental and social goals.

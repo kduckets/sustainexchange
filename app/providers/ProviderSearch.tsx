@@ -9,7 +9,7 @@ import { Header } from "@/app/components/Header"
 import { SearchResults } from "@/app/components/SearchResults"
 import { LoadingState } from "@/app/components/LoadingState"
 import { providers, specializations, standardSectors, standardMarkets } from "@/data/providers"
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useRef } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import { SearchTypeahead } from "@/app/components/SearchTypeahead"
@@ -219,6 +219,53 @@ export default function ProviderSearch() {
   }) {
     const [showTooltip, setShowTooltip] = useState(false)
     const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed)
+    const tooltipRef = useRef<HTMLDivElement>(null)
+
+    // Create a tooltip component that uses a portal to render outside the container
+    const TooltipContent = () => {
+      if (!showTooltip || !tooltip) return null
+
+      return (
+        <div
+          ref={tooltipRef}
+          className="fixed bg-white rounded-md shadow-lg border border-gray-200 text-sm text-gray-700 p-4 z-[9999] w-64"
+          style={{
+            // We'll set the position in useEffect
+            visibility: showTooltip ? "visible" : "hidden",
+          }}
+        >
+          {tooltip}
+        </div>
+      )
+    }
+
+    // Position the tooltip when it becomes visible
+    useEffect(() => {
+      if (showTooltip && tooltipRef.current) {
+        const infoButton = document.getElementById(`info-button-${title}`)
+        if (infoButton) {
+          const rect = infoButton.getBoundingClientRect()
+          const tooltipEl = tooltipRef.current
+
+          // Position above the info button
+          tooltipEl.style.top = `${rect.top - tooltipEl.offsetHeight - 10}px`
+          tooltipEl.style.left = `${rect.left - tooltipEl.offsetWidth / 2 + infoButton.offsetWidth / 2}px`
+
+          // Ensure the tooltip stays within the viewport
+          const tooltipRect = tooltipEl.getBoundingClientRect()
+
+          // Adjust if off the left edge
+          if (tooltipRect.left < 10) {
+            tooltipEl.style.left = "10px"
+          }
+
+          // Adjust if off the right edge
+          if (tooltipRect.right > window.innerWidth - 10) {
+            tooltipEl.style.left = `${window.innerWidth - tooltipEl.offsetWidth - 10}px`
+          }
+        }
+      }
+    }, [showTooltip, title])
 
     return (
       <div className="mb-6">
@@ -227,6 +274,7 @@ export default function ProviderSearch() {
           {tooltip && (
             <div className="relative ml-2">
               <button
+                id={`info-button-${title}`}
                 type="button"
                 className="text-gray-400 hover:text-gray-600"
                 onMouseEnter={() => setShowTooltip(true)}
@@ -236,12 +284,7 @@ export default function ProviderSearch() {
               >
                 <Info className="h-4 w-4" />
               </button>
-              {showTooltip && (
-                <div className="absolute z-50 w-72 p-4 bg-white rounded-md shadow-lg border border-gray-200 text-sm text-gray-700 left-0 top-6">
-                  {tooltip}
-                  <div className="absolute -top-2 left-2 w-3 h-3 bg-white border-t border-l border-gray-200 transform rotate-45"></div>
-                </div>
-              )}
+              <TooltipContent />
             </div>
           )}
 
@@ -264,7 +307,7 @@ export default function ProviderSearch() {
 
         {/* Content - hidden when collapsed */}
         {(!collapsible || !isCollapsed) && (
-          <div className={`space-y-2 overflow-y-auto`} style={{ maxHeight }}>
+          <div className={`space-y-2`}>
             {items.map((item) => (
               <div key={item} className="flex items-center">
                 <Checkbox
@@ -318,13 +361,12 @@ export default function ProviderSearch() {
         selectedItems={filters.firmSize}
         tooltip={
           <div className="space-y-2">
-            <p className="font-medium text-gray-800">Firm Size Categories:</p>
             <ul className="list-disc pl-5 space-y-1.5">
               <li>
                 <span className="font-medium">Small:</span> Fewer than 25 employees
               </li>
               <li>
-                <span className="font-medium">Mid-size:</span> Between 25-100 employees
+                <span className="font-medium">Mid-size:</span> 25-100 employees
               </li>
               <li>
                 <span className="font-medium">Large:</span> More than 100 employees
@@ -448,9 +490,14 @@ export default function ProviderSearch() {
 
         <div className="grid md:grid-cols-[280px,1fr] gap-8">
           <div className="hidden md:block">
-            <div className="bg-white p-6 rounded-lg shadow-sm sticky top-8">
-              <h3 className="font-semibold text-lg mb-6 pb-2 border-b">Filters</h3>
-              <FiltersContent />
+            <div
+              className="bg-white p-6 rounded-lg shadow-sm sticky top-8"
+              style={{ maxHeight: "calc(100vh - 100px)" }}
+            >
+              <h3 className="font-semibold text-lg mb-4 pb-2 border-b">Filters</h3>
+              <div className="overflow-y-auto pr-2" style={{ maxHeight: "calc(100vh - 200px)" }}>
+                <FiltersContent />
+              </div>
             </div>
           </div>
           <div>
